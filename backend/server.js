@@ -2,15 +2,20 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
+const helmet = require('helmet')
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 
+app.use(helmet())
+app.use(helmet.noSniff())
+app.use(helmet.xssFilter())
+
 //Connect to database.
-//mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true })
-mongoose.connect('mongodb://localhost/blood_sugar_tracker', { useUnifiedTopology: true, useNewUrlParser: true }) 
+mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true })
+//mongoose.connect('mongodb://localhost/blood_sugar_tracker', { useUnifiedTopology: true, useNewUrlParser: true }) 
 
 //Test connection
 mongoose.connection.once('open', () => {

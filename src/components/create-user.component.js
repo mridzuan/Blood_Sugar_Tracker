@@ -55,11 +55,11 @@ export default class CreateUser extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        const { password1, password2 } = this.state
+       /* const { password1, password2 } = this.state
 
         if (password1 !== password2) {
             alert("Passwords do not match!")
-        } else {
+        } else {*/
             const user = {
                 firstname: this.state.firstname,
                 lastname: this.state.lastname,
@@ -72,7 +72,7 @@ export default class CreateUser extends Component {
             axios.post('http://localhost:5000/users/add', user)
                 .then(res => console.log(res.data))
     
-        }
+        //}
 
         
     }
@@ -97,7 +97,8 @@ export default class CreateUser extends Component {
                 <div className = "outer_container">
                     <div className = "inner_container">    
                         <p>Profile</p>
-                        <form onSubmit={this.onSubmit}>
+                        
+                        <form action = "http://localhost:5000/users/add" method = "post">
                             <input className = "firstname" type = "text" name = "firstname" placeholder = "first name" onChange={this.onChangeFirstname} />
                             <input className = "lastname" type = "text" name = "lastname" placeholder = "last name" onChange={this.onChangeLastname} />
                             <input className = "email" type = "text" name = "email" placeholder = "email" onChange={this.onChangeEmail} />
