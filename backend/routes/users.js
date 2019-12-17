@@ -22,7 +22,7 @@ router.route('/add').post((req, res) => {
     if (nameCheck.test(firstname)) {
         if (nameCheck.test(lastname)) {
             if (emailValidate.test(email)) {
-                if (password1 == password2) { //Why does this not work?
+                if (password1 == password2 && password1 !== "" && password2 !== "") { 
                     User.findOne({email: email}, (err, result) => {
                         if (err) {
                             res.send("Error reading database")
@@ -69,7 +69,7 @@ router.route('/add').post((req, res) => {
         }
     } else {
         res.send("Please enter a valid first name.")
-    }                            
+    }                         
 })
 
 module.exports = router

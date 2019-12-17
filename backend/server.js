@@ -14,8 +14,8 @@ app.use(helmet.noSniff())
 app.use(helmet.xssFilter())
 
 //Connect to database.
-mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true })
-//mongoose.connect('mongodb://localhost/blood_sugar_tracker', { useUnifiedTopology: true, useNewUrlParser: true }) 
+//mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/blood_sugar_tracker', { useUnifiedTopology: true, useNewUrlParser: true }) 
 
 //Test connection
 mongoose.connection.once('open', () => {
