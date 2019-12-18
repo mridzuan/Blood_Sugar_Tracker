@@ -81,14 +81,14 @@ export default class CreateUser extends Component {
                 <h1>How It Works</h1>
                     <p>This is an app to help you track your blood sugar levels daily, weekly, monthly, and yearly.</p>
                     <div className = "list">
-                        <ul>
+                        <ol>
                             <li>Create a profile</li>
                             <li>When you login your 10 most recent readings will be displayed, as well as your overall average reading.</li>
                             <li>Enter your blood sugar level in the box and click submit.</li>
-                            <li>Your reading will be saved with the date and time.</li>
+                            <li>Your reading will be saved.</li>
                             <li>Repeat whenever you are required to take a reading.  Usually 1 - 7 times per day, depending on your situation.</li>
                             <li>You will be sent reports weekly, monthly, and yearly containing your readings as well as averages.</li>
-                        </ul>
+                        </ol>
                     </div>
                 </div>
                 <div className = "outer_container">

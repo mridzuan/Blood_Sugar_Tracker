@@ -71,15 +71,12 @@ input[type=submit]:hover {
 
 ul {
   font-size: .85rem;
-  
   list-style: none;
 }
 
-li {
- 
-
+ol {
+  text-align: left;
 }
-
 
 .info {
   text-align: center;
@@ -88,7 +85,11 @@ li {
 .list {
   display:flex; 
   flex-direction:row;
-  justify-content: center;
+  justify-content: space-evenly;
+}
+
+.logout {
+  text-align: right;
 }
 
 @media screen and (max-width: 850px) {

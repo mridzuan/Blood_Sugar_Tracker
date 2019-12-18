@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css"
 
 var listOfReadings =[]
 var listOfDates = []
@@ -10,18 +8,12 @@ export default class LoggedIn extends Component {
     constructor(props) {
         super(props);
 
-        this.onChangeFirstname = this.onChangeFirstname.bind(this)
-        this.onChangeLevel = this.onChangeLevel.bind(this)
-        this.onChangeDate = this.onChangeDate.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
 
         this.state = {
-            firstname: '',
             dataFirstName: '',
-            level: 0,
             levelsList: [],
             datesList: [],
-            date: new Date(),
             readings: []
         }
     }
@@ -49,9 +41,9 @@ export default class LoggedIn extends Component {
                 }
                     this.setState({
                         //level: response.data[4].bloodSugar[0].level,
-                       levelsList: listOfReadings.slice(1).slice(-10),
+                       levelsList: listOfReadings,
                         readings: response.data,
-                        datesList: listOfDates.slice(1).slice(-10),
+                        datesList: listOfDates,
                         dataFirstName: response.data[4].firstname
                     })
                    //console.log(this.state.levelsList)
@@ -62,24 +54,6 @@ export default class LoggedIn extends Component {
             .catch((error) => {
                 console.log(error)
             })
-    }
-
-    onChangeFirstname(e) {
-        this.setState({
-            firstname: e.target.value
-        })
-    }
-
-    onChangeLevel(e) {
-        this.setState({
-            level: e.target.value
-        })
-    }
-
-    onChangeDate(date) {
-        this.setState({
-            date: date
-        })
     }
 
     onSubmit(e) {
@@ -111,18 +85,21 @@ export default class LoggedIn extends Component {
         for (var i = 0; i < listOfReadings.length; i++) {
             total += listOfReadings[i];
         }
-        return Math.round(total / listOfReadings.length);
+        return Math.round(total / this.state.levelsList.length);
     }
 
     render() {
         return (
             <div>
+            <div className = "back">
+                <a href="localhost:3001/loggedin">---Back to submit reading.</a>
+            </div>
                 <div className = "logout">
                     <a href="localhost:3001/entrypage">Log out</a>
                 </div>
                 <div className = "info">
                     <h1>Welcome {this.state.dataFirstName}</h1>
-                        <p>Here are your most recent readings.</p>
+                        <p>Here is your full history of readings.</p>
                         <div className = "list">
                             <ul>
                                 <p><u>Level</u></p>
@@ -133,27 +110,8 @@ export default class LoggedIn extends Component {
                                 {this.renderDates()}
                             </ul>
                         </div>
-                </div>
-                <div className = "outer_container"><br /><br /><br /><br /><br /><br />
-                    <p>Your average blood sugar level is: {this.averageReading()}</p>
-                    <p>See your <a href="">full history</a>.</p><br />
-                    <div className = "inner_container">    
-                            <p>New Reading</p>
-                            <form onSubmit={this.onSubmit}>
-                                <input className = "firstname" type = "text" name = "firstname" placeholder = "Enter your firstname (testing)" onChange = {this.onChangeFirstname} />
-                                <input className = "newreading" type = "text" name = "newreading" placeholder = "Enter your number" onChange = {this.onChangeLevel} />
-                                <input type = "submit" value = "Submit"/>
-                                <div className="dateform">
-                                    <label>Date: </label>
-                                    <div>
-                                        <DatePicker
-                                        selected={this.state.date}
-                                        onChange={this.onChangeDate}
-                                        />
-                                    </div>
-                                </div>
-                            </form>
-                    </div>
+                        <p>Your average blood sugar level is: {this.averageReading()}</p><br />
+                        <p>See a reading that is incorrect?  <a href="">Edit</a> or <a href="">delete</a> a reading.</p>
                 </div>
             </div>
         )
