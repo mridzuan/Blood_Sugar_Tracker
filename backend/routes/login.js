@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt')
 const router = require('express').Router()
 let User = require('../models/user.model')
+const jwt = require("jsonwebtoken");
+const keys = require("../config/keys");
 
 router.route('/').get((req, res) => {
     User.find()
@@ -20,9 +22,31 @@ router.route('/login').post((req, res) => {
                 res.send("Email does not exist, please register.")
             } else {
                 bcrypt.compare(password, user.password).then((result) => {
-                   if (result) {
-                       res.send("Login successful")
-                    } else {
+                  if (result) {
+                      // User matched
+                        // Create JWT Payload
+                        const payload = {
+                            id: user.id,
+                            name: user.firstname
+                  }
+                  
+                  jwt.sign(
+                    payload,
+                    keys.secretOrKey,
+                    {
+                      expiresIn: 31556926 // 1 year in seconds
+                    },
+                    (err, token) => {
+                      res.json({
+                        success: true,
+                        token: "Bearer " + token
+                      });
+                    }
+                  )
+                }
+                    /* if (result) {
+                       res.send("Login successful")*/
+                    else {
                         res.send("Incorrect password")
                     }
                 })

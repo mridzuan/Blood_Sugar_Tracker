@@ -6,6 +6,7 @@ import EntryPage from "./components/entry-page.component";
 import LoggedIn from "./components/logged-in.component.js";
 import CreateUser from "./components/create-user.component";
 import FullHistory from "./components/full-history.component";
+import ForgotPassword from "./components/forgot-password.component";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Route path = "/loggedin" component={LoggedIn} />
       <Route path = "/createuser" component={CreateUser} />
       <Route path = "/fullhistory" component={FullHistory} />
+      <Route path = "/forgotpassword" component={ForgotPassword} />
       
     </Router>
   );

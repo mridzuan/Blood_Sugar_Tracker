@@ -3,15 +3,23 @@ const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const helmet = require('helmet')
+const passport = require('passport')
 
 const app = express()
+
+
 
 app.use(cors())
 app.use(express.json())
 
+app.use(passport.initialize())
+require('./config/passport')
+
 app.use(helmet())
 app.use(helmet.noSniff())
 app.use(helmet.xssFilter())
+
+
 
 //Connect to database.
 mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true })

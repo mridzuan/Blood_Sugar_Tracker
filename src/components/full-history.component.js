@@ -72,11 +72,11 @@ export default class LoggedIn extends Component {
     }
 
     renderList() {
-        return (this.state.levelsList.map(el => <li>{el}</li>))
+        return (this.state.levelsList.map(el => <li>{el} <a href="">edit</a></li>))
     }
 
     renderDates() {
-        return ((this.state.datesList.map(el => <li>{el.substr(0, 10)}</li>)))
+        return ((this.state.datesList.map(el => <li>{el.substr(0, 10)} <a href="">delete</a></li>)))
     }
 
     //All time average
@@ -110,8 +110,7 @@ export default class LoggedIn extends Component {
                                 {this.renderDates()}
                             </ul>
                         </div>
-                        <p>Your average blood sugar level is: {this.averageReading()}</p><br />
-                        <p>See a reading that is incorrect?  <a href="">Edit</a> or <a href="">delete</a> a reading.</p>
+                        <p>Your average blood sugar level is: {this.averageReading()}</p><br></br>
                 </div>
             </div>
         )
