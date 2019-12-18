@@ -7,6 +7,13 @@ const userSchema = new Schema(
         lastname: String,
         email: String,
         password: String,
+        bloodSugar:
+        [
+            {
+                level: Number,
+                date:{type: Date, default: Date.now}
+            }
+        ]
     }, {
         timestamps: true
     }

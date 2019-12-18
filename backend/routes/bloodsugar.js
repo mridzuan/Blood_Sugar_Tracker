@@ -1,9 +1,10 @@
 const router = require('express').Router()
 let Bloodsugar = require('../models/bloodsugar.model')
+let User = require('../models/user.model')
 
 router.route('/').get((req, res) => {
-    Bloodsugar.find()
-        .then(bloodsugar => res.json(bloodsugar))
+    User.find()
+        .then(user => res.json(user))
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
@@ -12,7 +13,26 @@ router.route('/add').post((req, res) => {
     const { level } = req.body
     const date = Date.parse(req.body.date)
 
-    const newBloodsugar = new Bloodsugar(
+    User.findOne({firstname: firstname}, (err, result) => {
+        if (err) {
+            res.send("Error contacting database")
+          } else if (!result){
+            res.send("userId not found")
+          } else {
+              var newReading = (
+                  {
+                      level: level,
+                      date: date
+                  }
+              )
+              result.bloodSugar.push(newReading)
+              result.save()
+              .then(() => res.json('Reading added!'))
+              .catch(err => res.status(400).json('Error: ' + err))
+          }
+    })
+
+   /* const newBloodsugar = new Bloodsugar(
         {
             firstname: firstname,
             level: level,
@@ -22,7 +42,7 @@ router.route('/add').post((req, res) => {
 
     newBloodsugar.save()
         .then(() => res.json('Reading added!'))
-        .catch(err => res.status(400).json('Error: ' + err))
+        .catch(err => res.status(400).json('Error: ' + err))*/
 })
 
 router.route('/:id').get((req, res) => {

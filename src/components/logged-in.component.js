@@ -15,6 +15,8 @@ export default class LoggedIn extends Component {
         this.state = {
             firstname: '',
             level: 0,
+            levelsList: [],
+            datesList: [],
             date: new Date(),
             readings: []
         }
@@ -23,12 +25,23 @@ export default class LoggedIn extends Component {
     componentDidMount() {
         axios.get('http://localhost:5000/bloodsugar')
             .then(response => {
-                    this.setState({
-                        level: response.data[0].level,
+                var listOfReadings =[]
+                var listOfDates = []
 
-                        readings: response.data
+                //[4] needs to be the specific user that is logged in.
+                for (var i = 0; i < response.data[4].bloodSugar.length; i++) {
+                        listOfReadings.push(response.data[4].bloodSugar[i].level)
+                        listOfDates.push(response.data[4].bloodSugar[i].date)
+                }
+                    this.setState({
+                        //level: response.data[4].bloodSugar[0].level,
+                       levelsList: listOfReadings,
+                        readings: response.data,
+                        datesList: listOfDates
                     })
-                    console.log(this.state.level)
+                   console.log(this.state.levelsList)
+                   console.log(this.state.readings)
+                   console.log(this.state.datesList)
             })
             .catch((error) => {
                 console.log(error)
@@ -68,6 +81,22 @@ export default class LoggedIn extends Component {
         console.log(reading)
     }
 
+    renderList() {
+        return (this.state.levelsList.map(el => <li>{el}</li>))
+    }
+
+    renderDates() {
+        return ((this.state.datesList.map(el => <li>{el.substr(0, 10)}</li>)))
+    }
+
+    averageReading() {
+        var total = 0;
+        for (var i = 0; i < this.state.levelsList.length; i++) {
+            total += this.state.levelsList[i];
+        }
+        return Math.round(total / this.state.levelsList.length);
+    }
+
     render() {
         return (
             <div>
@@ -76,20 +105,15 @@ export default class LoggedIn extends Component {
                         <p>Here are your most recent readings.</p>
                         <div className = "list">
                             <ul>
-                                <li>(Date) (Time) (Number)</li>
-                                <li>(Date) (Time) (Number)</li>
-                                <li>(Date) (Time) (Number)</li>
-                                <li>(Date) (Time) (Number)</li>
-                                <li>(Date) (Time) (Number)</li>
-                                <li>(Date) (Time) (Number)</li>
-                                <li>(Date) (Time) (Number)</li>
-                                <li>(Date) (Time) (Number)</li>
-                                <li>(Date) (Time) (Number)</li>
+                                {this.renderList()} 
+                            </ul>
+                            <ul>
+                                {this.renderDates()}
                             </ul>
                         </div>
                 </div>
                 <div className = "outer_container"><br />
-                    <p>Your average blood sugar level is: avg</p><br />
+                    <p>Your average blood sugar level is: {this.averageReading()}</p><br />
                     <div className = "inner_container">    
                             <p>New Reading</p>
                             <form onSubmit={this.onSubmit}>

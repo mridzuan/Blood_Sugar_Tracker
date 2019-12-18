@@ -35,7 +35,7 @@ export default class EntryPage extends Component {
                 password: this.state.password
             }
     
-           // console.log(user)
+           console.log(user)
     
             axios.post('http://localhost:5000/login/login', user)
                 .then(res => console.log(res.data))

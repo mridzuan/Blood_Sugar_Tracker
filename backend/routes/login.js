@@ -28,6 +28,8 @@ router.route('/login').post((req, res) => {
                 })
             }
         })
+    } else {
+        res.send("Invalid email format")
     }
 })
 module.exports = router
