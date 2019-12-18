@@ -24,9 +24,11 @@ export default class LoggedIn extends Component {
         axios.get('http://localhost:5000/bloodsugar')
             .then(response => {
                     this.setState({
+                        level: response.data[0].level,
+
                         readings: response.data
                     })
-                    console.log(this.state.readings)
+                    console.log(this.state.level)
             })
             .catch((error) => {
                 console.log(error)

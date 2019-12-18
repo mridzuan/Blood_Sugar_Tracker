@@ -25,9 +25,11 @@ mongoose.connection.once('open', () => {
 
 const usersRouter = require('./routes/users')
 const bloodsugarRouter = require('./routes/bloodsugar')
+const loginRouter = require('./routes/login')
 
 app.use('/users', usersRouter)
 app.use('/bloodsugar', bloodsugarRouter)
+app.use('/login', loginRouter)
 
 
 
