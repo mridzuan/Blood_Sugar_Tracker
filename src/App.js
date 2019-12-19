@@ -42,10 +42,10 @@ function App() {
       <Router>
         <Route path = "/login" component={EntryPage} />
         <Route path = "/createuser" component={CreateUser} />
-        <Route path = "/fullhistory" component={FullHistory} />
         <Route path = "/forgotpassword" component={ForgotPassword} />
         <Switch>
               <PrivateRoute exact path="/loggedin" component={LoggedIn} />
+              <PrivateRoute path = "/fullhistory" component={FullHistory} />
             </Switch>
       </Router>
     </Provider>

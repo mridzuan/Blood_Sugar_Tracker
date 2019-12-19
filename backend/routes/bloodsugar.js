@@ -9,11 +9,12 @@ router.route('/').get((req, res) => {
 })
 
 router.route('/add').post((req, res) => {
-    const { firstname } = req.body
+    //const { firstname } = req.body
+    const { id } = req.body
     const { level } = req.body
     const date = Date.parse(req.body.date)
 
-    User.findOne({firstname: firstname}, (err, result) => {
+    User.findOne({_id: id}, (err, result) => {
         if (err) {
             res.send("Error contacting database")
           } else if (!result){

@@ -4,7 +4,7 @@ import axios from 'axios'
 var listOfReadings =[]
 var listOfDates = []
 
-export default class LoggedIn extends Component {
+export default class FullHistory extends Component {
     constructor(props) {
         super(props);
 
@@ -21,6 +21,9 @@ export default class LoggedIn extends Component {
     
 
     componentDidMount() {
+
+
+        
         axios.get('http://localhost:5000/bloodsugar')
             .then(response => {
                 

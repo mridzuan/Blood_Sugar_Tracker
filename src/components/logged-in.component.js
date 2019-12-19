@@ -6,8 +6,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "./actions/authActions";
 
+
 var listOfReadings =[]
 var listOfDates = []
+let currentUser;
+
 
 /*export default class LoggedIn*/ class Dashboard extends Component {
     constructor(props) {
@@ -21,6 +24,7 @@ var listOfDates = []
         this.state = {
             firstname: '',
             dataFirstName: '',
+            id: '',
             level: 0,
             levelsList: [],
             datesList: [],
@@ -35,35 +39,52 @@ var listOfDates = []
     }
 
     componentDidMount() {
+        
+        const { user } = this.props.auth;
+ 
         axios.get('http://localhost:5000/bloodsugar')
             .then(response => {
-                
+                //Match the current user with info in database
+                for (var i = 0; i < response.data.length; i++) {
+                    if (user.id == response.data[i]._id) {
+                        console.log("Success!")
+                        currentUser = response.data[i]
+                    } else {
+                        console.log("can't find!")
+                    }
+                }
 
                 //Sort the array by date so that values display in order.
-                var sortedBloodSugarArray = response.data[2].bloodSugar.sort(function(a,b) {
+                var sortedBloodSugarArray = currentUser.bloodSugar.sort(function(a,b) {
                     a = new Date(a.date)
                     b = new Date(b.date)
 
                     return a - b
                 })
 
-                //[4] needs to be the specific user that is logged in.
                 //Need to only show last 10 readings, but show overall average.
+                //It seems to be filling the newly logged in user with the previous users readings if the new user does not have 10.  However a page refresh fixes it.
                 for (var i = 0; i < sortedBloodSugarArray.length; i++) {
                         listOfReadings.push(sortedBloodSugarArray[i].level)
                         listOfDates.push(sortedBloodSugarArray[i].date)
                 }
                     this.setState({
+                        firstname: user.name,
+                        id: user.id,
                         //level: response.data[4].bloodSugar[0].level,
                        levelsList: listOfReadings.slice(1).slice(-10),
                         readings: response.data,
                         datesList: listOfDates.slice(1).slice(-10),
-                        dataFirstName: response.data[2].firstname
+                       // dataFirstName: response.data[2].firstname
                     })
+
+                    
                    //console.log(this.state.levelsList)
-                   console.log(this.state.readings)
+                   //console.log(this.state.readings)
                    //console.log(this.state.datesList)
-                   console.log(sortedBloodSugarArray)
+                   //console.log(sortedBloodSugarArray)
+                    console.log(user)
+                   console.log(currentUser)
             })
             .catch((error) => {
                 console.log(error)
@@ -89,18 +110,25 @@ var listOfDates = []
     }
 
     onSubmit(e) {
-        e.preventDefault();
+       e.preventDefault();
 
         const reading = {
-            firstname: this.state.firstname,
+            //firstname: this.state.firstname,
+            id: this.state.id,
             level: this.state.level,
             date: this.state.date
         }
 
         axios.post('http://localhost:5000/bloodsugar/add', reading)
-            .then(res => console.log(res.data))
+            .then(res =>  window.location.reload())
+                
+                
+                
+                //console.log(res.data))
+
 
         console.log(reading)
+       
     }
 
     renderList() {
@@ -125,10 +153,10 @@ var listOfDates = []
         return (
             <div>
                 <div className = "logout">
-                    <a href="/entrypage">Log out</a>
+                    <a href="/login" onClick={this.onLogoutClick}>Log out</a>
                 </div>
                 <div className = "info">
-                    <h1>Welcome {user.firstname/*this.state.dataFirstName*/}</h1>
+                    <h1>Welcome {user.name}</h1>
                         <p>Here are your most recent readings.</p>
                         <div className = "list">
                             <ul>
@@ -147,7 +175,6 @@ var listOfDates = []
                     <div className = "inner_container">    
                             <p>New Reading</p>
                             <form onSubmit={this.onSubmit}>
-                                <input className = "firstname" type = "text" name = "firstname" placeholder = "Enter your firstname (testing)" onChange = {this.onChangeFirstname} />
                                 <input className = "newreading" type = "text" name = "newreading" placeholder = "Enter your number" onChange = {this.onChangeLevel} />
                                 <input type = "submit" value = "Submit"/>
                                 <div className="dateform">
@@ -158,7 +185,6 @@ var listOfDates = []
                                         onChange={this.onChangeDate}
                                         />
                                     </div>
-                                    <input type = "submit" value = "logout" onClick={this.onLogoutClick}/>
                                 </div>
                             </form>
                     </div>

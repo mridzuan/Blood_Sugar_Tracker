@@ -21,7 +21,7 @@ import { loginUser } from "./actions/authActions";
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+   componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
           this.props.history.push("/loggedin"); // push user to dashboard when they login
         }
@@ -45,15 +45,15 @@ import { loginUser } from "./actions/authActions";
 
     onSubmit(e) {
         e.preventDefault();
-
+        
         const userData = {
             email: this.state.email,
             password: this.state.password
           };
-          
-      this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
-
-
+    
+   
+          this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
+          console.log(userData)
             /*const user = {
                 email: this.state.email,
                 password: this.state.password
@@ -79,7 +79,7 @@ import { loginUser } from "./actions/authActions";
     componentDidMount() {
         // If logged in and user navigates to Login page, should redirect them to dashboard
         if (this.props.auth.isAuthenticated) {
-          this.props.history.push("/dashboard");
+          this.props.history.push("/loggedin");
         }
       }
 
@@ -95,7 +95,6 @@ import { loginUser } from "./actions/authActions";
                                 <input className = "pword" type = "password" name = "password" placeholder = "password" onChange={this.onChangePassword} />
                                 <input type = "submit" value = "Login" />
                             </form>
-                            <p><input className = "loggedin" type = "checkbox" name="keeploggedin" />Keep me logged in</p>
                             <p> <a href = "/forgotpassword">Forgot</a> my password.</p>
                             <p> <a href = "/createuser">Create</a> an account.</p>
                     </div>
@@ -118,3 +117,5 @@ Login.propTypes = {
     mapStateToProps,
     { loginUser }
   )(Login);
+
+ 

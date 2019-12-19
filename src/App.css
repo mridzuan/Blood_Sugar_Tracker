@@ -82,6 +82,9 @@ ol {
   text-align: center;
 }
 
+a {
+  color: black;
+}
 .list {
   display:flex; 
   flex-direction:row;
@@ -91,6 +94,8 @@ ol {
 .logout {
   text-align: right;
 }
+
+
 
 @media screen and (max-width: 850px) {
    h1 {
