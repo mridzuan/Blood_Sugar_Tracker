@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css"
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "./actions/authActions";
 
 var listOfReadings =[]
 var listOfDates = []
 
-export default class LoggedIn extends Component {
+/*export default class LoggedIn*/ class Dashboard extends Component {
     constructor(props) {
         super(props);
 
@@ -26,7 +29,10 @@ export default class LoggedIn extends Component {
         }
     }
 
-    
+    onLogoutClick = e => {
+        e.preventDefault();
+        this.props.logoutUser();
+    }
 
     componentDidMount() {
         axios.get('http://localhost:5000/bloodsugar')
@@ -34,7 +40,7 @@ export default class LoggedIn extends Component {
                 
 
                 //Sort the array by date so that values display in order.
-                var sortedBloodSugarArray = response.data[4].bloodSugar.sort(function(a,b) {
+                var sortedBloodSugarArray = response.data[2].bloodSugar.sort(function(a,b) {
                     a = new Date(a.date)
                     b = new Date(b.date)
 
@@ -52,7 +58,7 @@ export default class LoggedIn extends Component {
                        levelsList: listOfReadings.slice(1).slice(-10),
                         readings: response.data,
                         datesList: listOfDates.slice(1).slice(-10),
-                        dataFirstName: response.data[4].firstname
+                        dataFirstName: response.data[2].firstname
                     })
                    //console.log(this.state.levelsList)
                    console.log(this.state.readings)
@@ -115,13 +121,14 @@ export default class LoggedIn extends Component {
     }
 
     render() {
+        const { user } = this.props.auth;
         return (
             <div>
                 <div className = "logout">
-                    <a href="localhost:3001/entrypage">Log out</a>
+                    <a href="/entrypage">Log out</a>
                 </div>
                 <div className = "info">
-                    <h1>Welcome {this.state.dataFirstName}</h1>
+                    <h1>Welcome {user.firstname/*this.state.dataFirstName*/}</h1>
                         <p>Here are your most recent readings.</p>
                         <div className = "list">
                             <ul>
@@ -134,9 +141,9 @@ export default class LoggedIn extends Component {
                             </ul>
                         </div>
                 </div>
-                <div className = "outer_container"><br /><br /><br /><br /><br /><br />
+                <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br />
                     <p>Your average blood sugar level is: {this.averageReading()}</p>
-                    <p>See your <a href="">full history</a>.</p><br />
+                    <p>See your <a href="/fullhistory">full history</a>.</p><br />
                     <div className = "inner_container">    
                             <p>New Reading</p>
                             <form onSubmit={this.onSubmit}>
@@ -151,6 +158,7 @@ export default class LoggedIn extends Component {
                                         onChange={this.onChangeDate}
                                         />
                                     </div>
+                                    <input type = "submit" value = "logout" onClick={this.onLogoutClick}/>
                                 </div>
                             </form>
                     </div>
@@ -159,3 +167,15 @@ export default class LoggedIn extends Component {
         )
     }
 }
+
+Dashboard.propTypes = {
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+  };
+  const mapStateToProps = state => ({
+    auth: state.auth
+  });
+  export default connect(
+    mapStateToProps,
+    { logoutUser }
+  )(Dashboard);

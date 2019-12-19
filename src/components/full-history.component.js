@@ -26,7 +26,7 @@ export default class LoggedIn extends Component {
                 
 
                 //Sort the array by date so that values display in order.
-                var sortedBloodSugarArray = response.data[4].bloodSugar.sort(function(a,b) {
+                var sortedBloodSugarArray = response.data[2].bloodSugar.sort(function(a,b) {
                     a = new Date(a.date)
                     b = new Date(b.date)
 
@@ -44,7 +44,7 @@ export default class LoggedIn extends Component {
                        levelsList: listOfReadings,
                         readings: response.data,
                         datesList: listOfDates,
-                        dataFirstName: response.data[4].firstname
+                        dataFirstName: response.data[2].firstname
                     })
                    //console.log(this.state.levelsList)
                    console.log(this.state.readings)
@@ -92,10 +92,10 @@ export default class LoggedIn extends Component {
         return (
             <div>
             <div className = "back">
-                <a href="localhost:3001/loggedin">---Back to submit reading.</a>
+                <a href="/loggedin">---Back to submit reading.</a>
             </div>
                 <div className = "logout">
-                    <a href="localhost:3001/entrypage">Log out</a>
+                    <a href="/entrypage">Log out</a>
                 </div>
                 <div className = "info">
                     <h1>Welcome {this.state.dataFirstName}</h1>

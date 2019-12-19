@@ -39,7 +39,7 @@ router.route('/login').post((req, res) => {
                     (err, token) => {
                       res.json({
                         success: true,
-                        token: "Bearer " + token
+                        token: /*"Bearer " + */token
                       });
                     }
                   )
