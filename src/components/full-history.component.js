@@ -7,15 +7,22 @@ import { logoutUser } from "./actions/authActions";
 var listOfReadings =[]
 var listOfDates = []
 let currentUser;
+let currentReading;
+let itemId;
 
  class FullHistory extends Component {
     constructor(props) {
         super(props);
+        
+    
 
         this.state = {
             levelsList: [],
             datesList: [],
-            readings: []
+            readings: [],
+            message: '',
+            id: '',
+            currentReadingId: []
         }
     }
 
@@ -33,14 +40,14 @@ let currentUser;
                 //Match the current user with info in database
                 for (var i = 0; i < response.data.length; i++) {
                     if (user.id === response.data[i]._id) {
-                        console.log("Success!")
                         currentUser = response.data[i]
-                    } else {
-                        console.log("can't find!")
-                    }
+                    } 
                 }
 
-                
+                //Get ID of the current reading.
+                for (var i = 0; i < currentUser.bloodSugar.length; i ++) {
+
+                }
 
                 //Sort the array by date so that values display in order.
                 var sortedBloodSugarArray = currentUser.bloodSugar.sort(function(a,b) {
@@ -61,24 +68,44 @@ let currentUser;
                         levelsList: listOfReadings,
                         readings: response.data,
                         datesList: listOfDates,
+                        //currentReadingId: currentUser.bloodSugar[56]._id
                     })
 
-                   console.log(user)
-                   console.log(currentUser)
+                   console.log(currentUser._id)
+                   //console.log(currentUser.bloodSugar[56]._id)
+                   console.log(this.state.currentReadingId)
             })
             .catch((error) => {
                 console.log(error)
             })
     }
 
+    renderReadingId() {
+        return this.state.currentReadingId
+    }
+
+    //Works!!!
+  //itemId = this.renderReadingId()
+   /* deleteItem(e) {
+        e.preventDefault();
+        axios.delete('http://localhost:5000/bloodsugar/5df95faeaab2a413519f1de1/5dfd0064bcf91f0c74d7a164')
+            .then(res => {
+                console.log(res)
+            })
+    }*/
     renderList() {
-        return (this.state.levelsList.map(el => <li>{el} <a href="">edit</a></li>))
+        return (this.state.levelsList.map(el => <li>{el} <a href="" >edit</a></li>))
     }
 
     renderDates() {
-        return ((this.state.datesList.map(el => <li>{el.substr(0, 10)} <a href="">delete</a></li>)))
+        return ((this.state.datesList.map(el => <li>{el.substr(0, 10)} <a href="" /*onClick={this.deleteItem}*/>delete</a></li>)))
     }
 
+    editItem() {
+
+    }
+
+    
     //All time average
     averageReading() {
         var total = 0;
@@ -112,6 +139,7 @@ let currentUser;
                             </ul>
                         </div>
                         <p>Your average blood sugar level is: {this.averageReading()}</p><br></br>
+                        <p>{this.renderReadingId()}</p>
                 </div>
             </div>
         )

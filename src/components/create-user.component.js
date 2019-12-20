@@ -3,6 +3,9 @@ import axios from 'axios'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+
+let message;
+
 class CreateUser extends Component {
     constructor(props) {
         super(props);
@@ -21,6 +24,7 @@ class CreateUser extends Component {
             email: '',
             password1: '',
             password2: '',
+            message: ''
         }
     }
 
@@ -65,14 +69,34 @@ class CreateUser extends Component {
                 password2: this.state.password2
             }
     
-            console.log(user)
+            //console.log(user)
     
             axios.post('http://localhost:5000/users/add', user)
-                .then(res => console.log(res.data))
+                .then((res) => {
+                    this.setState({
+                        message: res.data
+                    })
+                    
+                    console.log(message)
+                    if (this.state.message == "User added! Redirecting you to login page!") {
+                        setTimeout(function(){
+                            window.location = '/login';
+                         }, 1000);
+                         
+                    }
+                } 
+                    
+                   
+                    
+                    )
     
       // window.location = '/entrypage'
 
         
+    }
+
+    renderMessage() {
+        return this.state.message
     }
 
     componentDidMount() {
@@ -83,6 +107,7 @@ class CreateUser extends Component {
       }
 
     render() {
+        
         return (
             <div>
                 <div className = "info">
@@ -101,6 +126,7 @@ class CreateUser extends Component {
                 </div>
                 <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                     <div className = "inner_container">    
+                        <p>{this.renderMessage()}</p>
                         <p>Profile</p>
                         
                         <form onSubmit={this.onSubmit}>

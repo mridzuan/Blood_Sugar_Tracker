@@ -29,7 +29,8 @@ let currentUser;
             levelsList: [],
             datesList: [],
             date: new Date(),
-            readings: []
+            readings: [],
+            message: ''
         }
     }
 
@@ -65,16 +66,28 @@ let currentUser;
                         listOfReadings.push(sortedBloodSugarArray[i].level)
                         listOfDates.push(sortedBloodSugarArray[i].date)
                 }
+
+
+                 //It seems to be filling the newly logged in user with the previous users readings if the new user does not have 10.  However a page refresh fixes it.
+                if (listOfReadings.length < 10) {
+                    listOfReadings = listOfReadings
+                } else {
+                    listOfReadings = listOfReadings.slice(1).slice(-10)
+                }
+
+                if (listOfDates.length < 10) {
+                    listOfDates = listOfDates
+                } else {
+                    listOfDates = listOfDates.slice(1).slice(-10)
+                }
                     this.setState({
                         firstname: user.name,
                         id: user.id,
-                       levelsList: listOfReadings.slice(1).slice(-10),
-                        readings: response.data,
-                        datesList: listOfDates.slice(1).slice(-10),
+                        levelsList: listOfReadings,
+                        
+                        datesList: listOfDates,
+                        readings: response.data
                     })
-
-                   // console.log(user)
-                   //console.log(currentUser)
             })
             .catch((error) => {
                 console.log(error)
@@ -109,7 +122,18 @@ let currentUser;
         }
 
         axios.post('http://localhost:5000/bloodsugar/add', reading)
-            .then(res =>  window.location.reload())
+        .then((res) => {
+            this.setState({
+                message: res.data
+            })
+            console.log(this.state.message)
+            if (this.state.message == "Reading added!") {
+                setTimeout(function(){
+                    window.location.reload()
+                 }, 1000);
+                 
+            }
+        }) 
     }
 
     renderList() {
@@ -127,6 +151,10 @@ let currentUser;
             total += listOfReadings[i];
         }
         return Math.round(total / listOfReadings.length);
+    }
+
+    renderMessage() {
+        return this.state.message
     }
 
     render() {
@@ -153,7 +181,8 @@ let currentUser;
                 <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br />
                     <p>Your average blood sugar level is: {this.averageReading()}</p>
                     <p>See your <a href="/fullhistory">full history</a>.</p><br />
-                    <div className = "inner_container">    
+                    <div className = "inner_container">
+                     
                             <p>New Reading</p>
                             <form onSubmit={this.onSubmit}>
                                 <input className = "newreading" type = "text" name = "newreading" placeholder = "Enter your number" onChange = {this.onChangeLevel} />
@@ -168,6 +197,7 @@ let currentUser;
                                     </div>
                                 </div>
                             </form>
+                            <p>{this.renderMessage()}</p>   
                     </div>
                 </div>
             </div>

@@ -48,7 +48,7 @@ router.route('/add').post((req, res) => {
                                     } else {
                                     newUser.password = hash;
                                     newUser.save()
-                                        .then(() => res.json('User added!'))
+                                        .then(() => res.json('User added! Redirecting you to login page!'))
                                         .catch(err => res.status(400).json('Error: ' + err))
                                     }
                                     
