@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-
-export default class CreateUser extends Component {
+class CreateUser extends Component {
     constructor(props) {
         super(props);
 
@@ -74,12 +75,12 @@ export default class CreateUser extends Component {
         
     }
 
-    /*componentDidMount() {
+    componentDidMount() {
         // If logged in and user navigates to Register page, should redirect them to dashboard
         if (this.props.auth.isAuthenticated) {
           this.props.history.push("/loggedin");
         }
-      }*/
+      }
 
     render() {
         return (
@@ -98,7 +99,7 @@ export default class CreateUser extends Component {
                         </ol>
                     </div>
                 </div>
-                <div className = "outer_container">
+                <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                     <div className = "inner_container">    
                         <p>Profile</p>
                         
@@ -116,3 +117,14 @@ export default class CreateUser extends Component {
         )
     }
 }
+
+CreateUser.propTypes = {
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+  };
+  const mapStateToProps = state => ({
+    auth: state.auth
+  });
+  export default connect(
+    mapStateToProps
+  )(CreateUser);

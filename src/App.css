@@ -36,7 +36,7 @@ p {
 }
 
 input[type=text], select {
-  width: 65%;
+  width: 75%;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -46,7 +46,7 @@ input[type=text], select {
 }
 
 input[type=password] {
-  width: 65%;
+  width: 75%;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;

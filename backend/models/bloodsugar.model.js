@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+/*const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const bloodsugarSchema = new Schema(
@@ -13,4 +13,4 @@ const bloodsugarSchema = new Schema(
 
 const Bloodsugar = mongoose.model('Bloodsugar', bloodsugarSchema)
 
-module.exports = Bloodsugar
+module.exports = Bloodsugar*/

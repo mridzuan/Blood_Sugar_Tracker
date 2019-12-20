@@ -12,7 +12,7 @@ var listOfDates = []
 let currentUser;
 
 
-/*export default class LoggedIn*/ class Dashboard extends Component {
+ class Dashboard extends Component {
     constructor(props) {
         super(props);
 
@@ -46,12 +46,9 @@ let currentUser;
             .then(response => {
                 //Match the current user with info in database
                 for (var i = 0; i < response.data.length; i++) {
-                    if (user.id == response.data[i]._id) {
-                        console.log("Success!")
+                    if (user.id === response.data[i]._id) {
                         currentUser = response.data[i]
-                    } else {
-                        console.log("can't find!")
-                    }
+                    } 
                 }
 
                 //Sort the array by date so that values display in order.
@@ -71,20 +68,13 @@ let currentUser;
                     this.setState({
                         firstname: user.name,
                         id: user.id,
-                        //level: response.data[4].bloodSugar[0].level,
                        levelsList: listOfReadings.slice(1).slice(-10),
                         readings: response.data,
                         datesList: listOfDates.slice(1).slice(-10),
-                       // dataFirstName: response.data[2].firstname
                     })
 
-                    
-                   //console.log(this.state.levelsList)
-                   //console.log(this.state.readings)
-                   //console.log(this.state.datesList)
-                   //console.log(sortedBloodSugarArray)
-                    console.log(user)
-                   console.log(currentUser)
+                   // console.log(user)
+                   //console.log(currentUser)
             })
             .catch((error) => {
                 console.log(error)
@@ -113,7 +103,6 @@ let currentUser;
        e.preventDefault();
 
         const reading = {
-            //firstname: this.state.firstname,
             id: this.state.id,
             level: this.state.level,
             date: this.state.date
@@ -121,14 +110,6 @@ let currentUser;
 
         axios.post('http://localhost:5000/bloodsugar/add', reading)
             .then(res =>  window.location.reload())
-                
-                
-                
-                //console.log(res.data))
-
-
-        console.log(reading)
-       
     }
 
     renderList() {
