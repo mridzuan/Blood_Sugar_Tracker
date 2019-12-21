@@ -13,8 +13,6 @@ let itemId;
  class FullHistory extends Component {
     constructor(props) {
         super(props);
-        
-    
 
         this.state = {
             levelsList: [],
@@ -25,6 +23,7 @@ let itemId;
             currentReadingId: [],
             currentUserId: ''
         }
+        this.deleteItem = this.deleteItem.bind(this)
     }
 
     onLogoutClick = e => {
@@ -38,6 +37,7 @@ let itemId;
         
         axios.get('http://localhost:5000/bloodsugar')
             .then(response => {
+                //use map or filter it will be more efficient/ quicker
                 //Match the current user with info in database
                 for (var i = 0; i < response.data.length; i++) {
                     if (user.id === response.data[i]._id) {
@@ -85,19 +85,19 @@ let itemId;
         return this.state.currentReadingId
     }
 
-    //Works!!!
+  //Array of collections for each one.  Need to have id as well as date.
   //itemId = this.renderReadingId()
-   deleteItem (e) {
-    e.preventDefault();
+   deleteItem (id) {
+  //  e.preventDefault();
   // const { user } = this.props.auth;
    //For some reason it does not want to register user in this function.  I need to figure out a way to have the url include the user id and the object id in order to delete.
-        
+       console.log(id) 
        const url = "http://localhost:5000/bloodsugar/5df95faeaab2a413519f1de1/5dfc2526c750610efe0e40bb"
         //axios.delete('http://localhost:5000/bloodsugar/5df95faeaab2a413519f1de1/5dfd0064bcf91f0c74d7a164')
-        axios.delete(url)
+       /* axios.delete(url)
             .then(res => {
                 console.log(res)
-            })
+            })*/
     }
 
     renderList() {
@@ -105,14 +105,15 @@ let itemId;
     }
 
     renderDates() {
-        return ((this.state.datesList.map((el) => <li key={el.id}>>{el.substr(0, 10)} <a href="" onClick={this.deleteItem}>delete</a></li>)))
+        console.log(this.state.datesList)
+        return ((
+            this.state.datesList.map((el) => 
+              //  <li key={el.id}>{el.substr(0, 10)} <a href="" onClick={this.deleteItem}>delete</a></li>
+                <li value={el.id} onClick={()=> this.deleteItem(el.id)}>delete</li>
+            )
+        ))
     }
 
-    editItem() {
-
-    }
-
-    
     //All time average
     averageReading() {
         var total = 0;
