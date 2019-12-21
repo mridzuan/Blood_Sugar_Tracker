@@ -124,9 +124,10 @@ class CreateUser extends Component {
                         </ol>
                     </div>
                 </div>
+                
                 <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                     <div className = "inner_container">    
-                        <p>{this.renderMessage()}</p>
+                        
                         <p>Profile</p>
                         
                         <form onSubmit={this.onSubmit}>
@@ -138,6 +139,7 @@ class CreateUser extends Component {
                             <input type = "submit" value = "Create" />
                          </form>
                     </div>
+                    <p>{this.renderMessage()}</p>
                 </div>
             </div>
         )

@@ -22,7 +22,8 @@ let itemId;
             readings: [],
             message: '',
             id: '',
-            currentReadingId: []
+            currentReadingId: [],
+            currentUserId: ''
         }
     }
 
@@ -71,9 +72,9 @@ let itemId;
                         //currentReadingId: currentUser.bloodSugar[56]._id
                     })
 
-                   console.log(currentUser._id)
+                   console.log(currentUser)
                    //console.log(currentUser.bloodSugar[56]._id)
-                   console.log(this.state.currentReadingId)
+                   console.log(user.id)
             })
             .catch((error) => {
                 console.log(error)
@@ -86,19 +87,25 @@ let itemId;
 
     //Works!!!
   //itemId = this.renderReadingId()
-   /* deleteItem(e) {
-        e.preventDefault();
-        axios.delete('http://localhost:5000/bloodsugar/5df95faeaab2a413519f1de1/5dfd0064bcf91f0c74d7a164')
+   deleteItem (e) {
+    e.preventDefault();
+  // const { user } = this.props.auth;
+   //For some reason it does not want to register user in this function.  I need to figure out a way to have the url include the user id and the object id in order to delete.
+        
+       const url = "http://localhost:5000/bloodsugar/5df95faeaab2a413519f1de1/5dfc2526c750610efe0e40bb"
+        //axios.delete('http://localhost:5000/bloodsugar/5df95faeaab2a413519f1de1/5dfd0064bcf91f0c74d7a164')
+        axios.delete(url)
             .then(res => {
                 console.log(res)
             })
-    }*/
+    }
+
     renderList() {
-        return (this.state.levelsList.map(el => <li>{el} <a href="" >edit</a></li>))
+        return (this.state.levelsList.map((el) => <li key={el.id}>{el}</li>))
     }
 
     renderDates() {
-        return ((this.state.datesList.map(el => <li>{el.substr(0, 10)} <a href="" /*onClick={this.deleteItem}*/>delete</a></li>)))
+        return ((this.state.datesList.map((el) => <li key={el.id}>>{el.substr(0, 10)} <a href="" onClick={this.deleteItem}>delete</a></li>)))
     }
 
     editItem() {

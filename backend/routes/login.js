@@ -4,6 +4,9 @@ let User = require('../models/user.model')
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
 
+
+
+
 router.route('/').get((req, res) => {
     User.find()
         .then(users => res.json(users))
@@ -19,7 +22,7 @@ router.route('/login').post((req, res) => {
     if (emailValidate.test(email)) {
         User.findOne({email: email}).then(user => {
              if (!user) {
-                res.send("Email does not exist, please register.")
+                res.send("Email does not exist. Please register.")
             } else {
                 bcrypt.compare(password, user.password).then((result) => {
                   if (result) {
@@ -47,7 +50,7 @@ router.route('/login').post((req, res) => {
                     /* if (result) {
                        res.send("Login successful")*/
                     else {
-                        res.send("Incorrect password")
+                        return res.send("Incorrect password")
                     }
                 })
             }

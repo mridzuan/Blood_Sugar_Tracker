@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "./actions/authActions";
@@ -17,7 +17,8 @@ import { loginUser } from "./actions/authActions";
             email: '',
             password: '',
             redirectTo: '',
-            errors: {}
+            errors: {},
+            message: ''
         }
     }
 
@@ -31,6 +32,7 @@ import { loginUser } from "./actions/authActions";
           });
         }   
     }
+
     onChangeEmail(e) {
         this.setState({
             email: e.target.value
@@ -46,25 +48,29 @@ import { loginUser } from "./actions/authActions";
     onSubmit(e) {
         e.preventDefault();
         
-        const userData = {
+       const userData = {
             email: this.state.email,
             password: this.state.password
           };
     
    
-          this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
+          
+          console.log(this.state.errors) // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
          // console.log(userData)
             /*const user = {
                 email: this.state.email,
                 password: this.state.password
             }
     
-           console.log(user)
+           console.log(user)*/
     
-            axios.post('http://localhost:5000/login/login', user)
+           axios.post('http://localhost:5000/login/login', userData)
                 .then(res => {
                     if (res) {
                         console.log(res.data)
+                        this.setState({
+                            message: res.data.toString()
+                        })
                         //window.location = '/loggedin'
                     } else {
                         console.log("No response from server.")
@@ -72,9 +78,14 @@ import { loginUser } from "./actions/authActions";
                     
                 })
       // window.location = '/entrypage'*/
-
+      this.props.loginUser(userData);
         
     }
+
+    renderMessage() {
+        return this.state.message
+    }
+
 
     componentDidMount() {
         // If logged in and user navigates to Login page, should redirect them to dashboard
@@ -90,6 +101,7 @@ import { loginUser } from "./actions/authActions";
                     <div className = "inner_container">    
                         <h1>Blood Sugar Tracker</h1>
                             <p>An app for diabetics</p>
+                            
                             <form onSubmit={this.onSubmit}>
                                 <input className = "email" type = "text" name = "email" placeholder = "email" onChange={this.onChangeEmail} />
                                 <input className = "pword" type = "password" name = "password" placeholder = "password" onChange={this.onChangePassword} />
@@ -98,6 +110,7 @@ import { loginUser } from "./actions/authActions";
                             <p> <a href = "/forgotpassword">Forgot</a> my password.</p>
                             <p> <a href = "/createuser">Create</a> an account.</p>
                     </div>
+                    <p>{this.renderMessage()}</p>
                 </div>
             </div>
         )
