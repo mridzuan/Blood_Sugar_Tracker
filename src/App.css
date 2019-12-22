@@ -91,11 +91,19 @@ a {
   justify-content: space-evenly;
 }
 
+.dateList {
+  display:flex; 
+  flex-direction:row;
+  justify-content: space-evenly;
+}
+
 .logout {
   text-align: right;
 }
 
-
+.delete:hover {
+  cursor: pointer
+}
 
 @media screen and (max-width: 850px) {
    h1 {

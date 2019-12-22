@@ -7,11 +7,6 @@ import { connect } from "react-redux";
 import { logoutUser } from "./actions/authActions";
 
 
-var listOfReadings =[]
-var listOfDates = []
-let currentUser;
-
-
  class Dashboard extends Component {
     constructor(props) {
         super(props);
@@ -23,79 +18,39 @@ let currentUser;
 
         this.state = {
             firstname: '',
-            dataFirstName: '',
             id: '',
             level: 0,
-            levelsList: [],
-            datesList: [],
             date: new Date(),
+            allReadings: [],
             readings: [],
             message: ''
         }
     }
 
-    onLogoutClick = e => {
-        e.preventDefault();
-        this.props.logoutUser();
-    }
-
+    
     componentDidMount() {
-        
         const { user } = this.props.auth;
  
         axios.get('http://localhost:5000/bloodsugar')
             .then(response => {
-                //Match the current user with info in database
-                for (var i = 0; i < response.data.length; i++) {
-                    if (user.id === response.data[i]._id) {
-                        currentUser = response.data[i]
-                    } 
-                }
+                //Match the current user with user in database
+                const currentUser = response.data.filter((x) => 
+                    x._id === user.id
+                )
 
-                //Sort the array by date so that values display in order.
-                var sortedBloodSugarArray = currentUser.bloodSugar.sort(function(a,b) {
-                    a = new Date(a.date)
-                    b = new Date(b.date)
+                //Sort the array with readings by date so that values display in order.
+                const sortedBloodSugarArray = currentUser[0].bloodSugar.sort((a,b) =>
+                    new Date(a.date) - new Date(b.date)  
+                )
 
-                    return a - b
+                this.setState({
+                    firstname: user.name,
+                    id: user.id,
+                    allReadings: sortedBloodSugarArray,
+                    //Set to only display 10 most recent readings
+                    readings: sortedBloodSugarArray.slice(1).slice(-10)
+                    
                 })
-
-                //Need to only show last 10 readings, but show overall average.
-                //It seems to be filling the newly logged in user with the previous users readings if the new user does not have 10.  However a page refresh fixes it.
-                for (var j = 0; j < sortedBloodSugarArray.length; j++) {
-                        listOfReadings.push(sortedBloodSugarArray[j].level)
-                        listOfDates.push(sortedBloodSugarArray[j].date)
-                }
-
-
-                 //It seems to be filling the newly logged in user with the previous users readings if the new user does not have 10.  However a page refresh fixes it.
-               /* if (listOfReadings.length < 10) {
-                    listOfReadings = listOfReadings
-                } else {
-                    listOfReadings = listOfReadings.slice(1).slice(-10)
-                }*/
-
-                if (listOfReadings > 10) {
-                    listOfReadings = listOfReadings.slice(1).slice(-10)
-                }
-
-               /* if (listOfDates.length < 10) {
-                    listOfDates = listOfDates
-                } else {
-                    listOfDates = listOfDates.slice(1).slice(-10)
-                }*/
-
-                if (listOfDates.length > 10) {
-                    listOfDates = listOfDates.slice(1).slice(-10)
-                }
-                    this.setState({
-                        firstname: user.name,
-                        id: user.id,
-                        levelsList: listOfReadings,
-                        
-                        datesList: listOfDates,
-                        readings: response.data
-                    })
             })
             .catch((error) => {
                 console.log(error)
@@ -120,60 +75,70 @@ let currentUser;
         })
     }
 
-    onSubmit(e) {
-       e.preventDefault();
-
-        const reading = {
-            id: this.state.id,
-            level: this.state.level,
-            date: this.state.date
-        }
-
-        axios.post('http://localhost:5000/bloodsugar/add', reading)
-        .then((res) => {
-            this.setState({
-                message: res.data
-            })
-            console.log(this.state.message)
-            if (this.state.message === "Reading added!") {
-                setTimeout(function(){
-                    window.location.reload()
-                 }, 1000);
-                 
-            }
-        }) 
-    }
-
     renderList() {
-        return (this.state.levelsList.map(el => <li>{el}</li>))
+        return (
+            this.state.readings.map((el, i) => 
+            <li key={i}>{el.level}</li>
+        ))
     }
 
     renderDates() {
-        return ((this.state.datesList.map(el => <li>{el.substr(0, 10)}</li>)))
+        return (
+            this.state.readings.map((el, j) => 
+            <li key={j}>{el.date.substr(0, 10)}</li>
+        ))
     }
 
     //All time average
     averageReading() {
         var total = 0;
-        for (var i = 0; i < listOfReadings.length; i++) {
-            total += listOfReadings[i];
+        for (var i = 0; i < this.state.allReadings.length; i++) {
+            total += this.state.allReadings[i].level;
         }
-        return Math.round(total / listOfReadings.length);
+        return Math.round(total / this.state.allReadings.length);
     }
 
     renderMessage() {
         return this.state.message
     }
 
+    onSubmit(e) {
+        e.preventDefault();
+ 
+         const reading = {
+             id: this.state.id,
+             level: this.state.level,
+             date: this.state.date
+         }
+ 
+         axios.post('http://localhost:5000/bloodsugar/add', reading)
+         .then((res) => {
+             this.setState({
+                 message: res.data
+             })
+             console.log(this.state.message)
+             if (this.state.message === "Reading added!") {
+                 setTimeout(function(){
+                     window.location.reload()
+                  }, 1000);
+                  
+             }
+         }) 
+     }
+
+    onLogoutClick = e => {
+        e.preventDefault();
+        this.props.logoutUser();
+    }
+
     render() {
-        const { user } = this.props.auth;
         return (
             <div>
                 <div className = "logout">
                     <a href="/login" onClick={this.onLogoutClick}>Log out</a>
                 </div>
                 <div className = "info">
-                    <h1>Welcome {user.name}</h1>
+                    <h1>Welcome {this.state.firstname}</h1>
                         <p>Here are your most recent readings.</p>
                         <div className = "list">
                             <ul>
@@ -190,7 +155,6 @@ let currentUser;
                     <p>Your average blood sugar level is: {this.averageReading()}</p>
                     <p>See your <a href="/fullhistory">full history</a>.</p><br />
                     <div className = "inner_container">
-                     
                             <p>New Reading</p>
                             <form onSubmit={this.onSubmit}>
                                 <input className = "newreading" type = "text" name = "newreading" placeholder = "Enter your number" onChange = {this.onChangeLevel} />
