@@ -48,8 +48,7 @@ import { logoutUser } from "./actions/authActions";
                     id: user.id,
                     allReadings: sortedBloodSugarArray,
                     //Set to only display 10 most recent readings
-                    readings: sortedBloodSugarArray.slice(1).slice(-10)
-                    
+                    readings: sortedBloodSugarArray.slice(0).slice(-10)
                 })
             })
             .catch((error) => {
@@ -95,7 +94,12 @@ import { logoutUser } from "./actions/authActions";
         for (var i = 0; i < this.state.allReadings.length; i++) {
             total += this.state.allReadings[i].level;
         }
-        return Math.round(total / this.state.allReadings.length);
+        if (isNaN(Math.round(total / this.state.allReadings.length))) {
+            return ""
+        } else {
+            return Math.round(total / this.state.allReadings.length);
+        }
+        
     }
 
     renderMessage() {
@@ -138,7 +142,7 @@ import { logoutUser } from "./actions/authActions";
                     <a href="/login" onClick={this.onLogoutClick}>Log out</a>
                 </div>
                 <div className = "info">
-                    <h1>Welcome {this.state.firstname}</h1>
+                    <h1>Welcome {this.state.firstname.charAt(0).toUpperCase() + this.state.firstname.substring(1)}</h1>
                         <p>Here are your most recent readings.</p>
                         <div className = "list">
                             <ul>

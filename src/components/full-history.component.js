@@ -10,6 +10,7 @@ import { logoutUser } from "./actions/authActions";
         super(props);
 
         this.state = {
+            firstname: '',
             readings: [],
             message: '',
             id: ''
@@ -26,7 +27,7 @@ import { logoutUser } from "./actions/authActions";
                 const currentUser = response.data.filter((x) => 
                     x._id === user.id
                 )
-                //Date seems to be jumping ahead a day.
+
                 //Sort the array with readings by date so that values display in order.
                 const sortedBloodSugarArray = currentUser[0].bloodSugar.sort((a,b) =>
                     new Date(a.date) - new Date(b.date)  
@@ -44,7 +45,6 @@ import { logoutUser } from "./actions/authActions";
     }
     
 
-  //Array of collections for each one.  Need to have id as well as date.
    deleteItem (id) {
         const url = `http://localhost:5000/bloodsugar/${this.state.id}/${id}`
         axios.delete(url)
@@ -84,7 +84,11 @@ import { logoutUser } from "./actions/authActions";
         for (var i = 0; i < this.state.readings.length; i++) {
             total += this.state.readings[i].level;
         }
-        return Math.round(total / this.state.readings.length);
+        if (isNaN(Math.round(total / this.state.readings.length))) {
+            return ""
+        } else {
+            return Math.round(total / this.state.readings.length);
+        }
     }
 
     renderMessage() {
@@ -106,7 +110,7 @@ import { logoutUser } from "./actions/authActions";
                     <a href="/login" onClick={this.onLogoutClick}>Log out</a>
                 </div>
                 <div className = "info">
-                    <h1>Welcome {this.state.firstname}</h1>
+                <h1>Welcome {this.state.firstname.charAt(0).toUpperCase() + this.state.firstname.substring(1)}</h1>
                         <p>Here is your full history of readings.</p>
                         <div className = "list">
                             <ul>

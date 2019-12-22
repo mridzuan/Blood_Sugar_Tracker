@@ -13,8 +13,8 @@ export const loginUser = userData => dispatch => {
       .post('http://localhost:5000/login/login', userData)
       .then(res => {
         // Save to localStorage
-        // Set token to localStorage
-        const { token } = res.data.token;
+  // Set token to localStorage
+        const { token } = res.data;
         localStorage.setItem("jwtToken", token);
         // Set token to Auth header
         setAuthToken(token);
@@ -26,7 +26,7 @@ export const loginUser = userData => dispatch => {
       .catch(err =>
         dispatch({
           type: GET_ERRORS,
-          payload: err.response.data
+          payload: err//.response.data
         })
       );
   };

@@ -22,13 +22,13 @@ p {
   top: 50%;
   margin-top: -200px;
   /* half of #content height*/
-  left: 0;
-  width: 100%;
+  left: 20%;
+  width: 60%;
   text-align: center;
 }
 
 .inner_container {
-  width: 50%;
+  width: 30%;
   margin-left: auto;
   margin-right: auto;
   height: 400px;
@@ -105,15 +105,45 @@ a {
   cursor: pointer
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 1200px) {
    h1 {
        font-size: 1.5rem;
    }
    
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 1000px) {
+  .inner_container {
+      width: 50%;
+  } 
+}
+
+@media screen and (max-width: 700px) {
+  .inner_container {
+      width: 60%;
+  } 
+}
+
+@media screen and (max-width: 450px) {
+  .inner_container {
+      width: 70%;
+  } 
+}
+
+@media screen and (max-width: 380px) {
+  .inner_container {
+      width: 80%;
+  } 
+}
+@media screen and (max-width: 750px) {
   ul {
+      font-size: .5rem;
+  }
+  
+}
+
+@media screen and (max-width: 750px) {
+  ol {
       font-size: .5rem;
   }
   

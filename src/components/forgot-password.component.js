@@ -9,7 +9,8 @@ export default class EntryPage extends Component {
         this.onSubmit = this.onSubmit.bind(this)
 
         this.state = {
-            email: ''
+            email: '',
+            message: ''
         }
     }
 
@@ -19,10 +20,26 @@ export default class EntryPage extends Component {
         })
     }
 
+    renderMessage() {
+        return this.state.message
+    }
+
     onSubmit(e) {
-    
-            axios.get('http://localhost:5000/users')
-                .then(res => console.log(res.data))
+        e.preventDefault()
+        
+        if (this.state.email === '') {
+            this.setState({
+                message: "Please enter your email address."
+            })
+        } else {
+            axios.post('http://localhost:5000/forgotpassword/forgotpassword', {email: this.state.email})
+                .then(res => {
+                    this.setState({
+                        message: res.data
+                    })
+                    console.log(this.state.message)
+                })
+        }
     
       // window.location = '/entrypage'
 
@@ -39,6 +56,7 @@ export default class EntryPage extends Component {
                                 <input className = "email" type = "text" name = "email" placeholder = "email" onChange={this.onChangeEmail} />
                                 <input type = "submit" value = "Reset" />
                             </form>
+                            <p>{this.renderMessage()}</p> 
                     </div>
                 </div>
             </div>

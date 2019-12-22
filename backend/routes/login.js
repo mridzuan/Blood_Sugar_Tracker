@@ -42,13 +42,11 @@ router.route('/login').post((req, res) => {
                     (err, token) => {
                       res.json({
                         success: true,
-                        token: /*"Bearer " + */token
+                        token: token
                       });
                     }
                   )
                 }
-                    /* if (result) {
-                       res.send("Login successful")*/
                     else {
                         return res.send("Incorrect password")
                     }

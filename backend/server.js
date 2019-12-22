@@ -23,7 +23,7 @@ app.use(helmet.xssFilter())
 
 //Connect to database.
 mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true })
-//mongoose.connect('mongodb://localhost/blood_sugar_tracker', { useUnifiedTopology: true, useNewUrlParser: true }) 
+
 
 //Test connection
 mongoose.connection.once('open', () => {
@@ -34,10 +34,12 @@ mongoose.connection.once('open', () => {
 const usersRouter = require('./routes/users')
 const bloodsugarRouter = require('./routes/bloodsugar')
 const loginRouter = require('./routes/login')
+const forgotpasswordRouter = require('./routes/forgotpassword')
 
 app.use('/users', usersRouter)
 app.use('/bloodsugar', bloodsugarRouter)
 app.use('/login', loginRouter)
+app.use('/forgotpassword', forgotpasswordRouter)
 
 
 

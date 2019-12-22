@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 
-let message;
-
 class CreateUser extends Component {
     constructor(props) {
         super(props);
@@ -27,6 +25,13 @@ class CreateUser extends Component {
             message: ''
         }
     }
+
+    componentDidMount() {
+        // If logged in and user navigates to Register page, should redirect them to dashboard
+        if (this.props.auth.isAuthenticated) {
+          this.props.history.push("/loggedin");
+        }
+      }
 
     onChangeFirstname(e) {
         this.setState({
@@ -69,67 +74,45 @@ class CreateUser extends Component {
                 password2: this.state.password2
             }
     
-            //console.log(user)
-    
             axios.post('http://localhost:5000/users/add', user)
                 .then((res) => {
                     this.setState({
                         message: res.data
                     })
                     
-                    console.log(message)
                     if (this.state.message === "User added! Redirecting you to login page!") {
                         setTimeout(function(){
                             window.location = '/login';
                          }, 1000);
                          
                     }
-                } 
-                    
-                   
-                    
-                    )
-    
-      // window.location = '/entrypage'
-
-        
+                })   
     }
 
     renderMessage() {
         return this.state.message
     }
 
-    componentDidMount() {
-        // If logged in and user navigates to Register page, should redirect them to dashboard
-        if (this.props.auth.isAuthenticated) {
-          this.props.history.push("/loggedin");
-        }
-      }
 
     render() {
-        
         return (
             <div>
                 <div className = "info">
                 <h1>How It Works</h1>
-                    <p>This is an app to help you track your blood sugar levels daily, weekly, monthly, and yearly.</p>
+                    <p>This is an app to help you track your blood sugar levels.</p>
                     <div className = "list">
                         <ol>
                             <li>Create a profile</li>
-                            <li>When you login your 10 most recent readings will be displayed, as well as your overall average reading.</li>
+                            <li>Login</li>
                             <li>Enter your blood sugar level in the box and click submit.</li>
                             <li>Your reading will be saved.</li>
-                            <li>Repeat whenever you are required to take a reading.  Usually 1 - 7 times per day, depending on your situation.</li>
-                            <li>You will be sent reports weekly, monthly, and yearly containing your readings as well as averages.</li>
+                            <li>Repeat whenever you are required to take a reading.</li>
                         </ol>
                     </div>
                 </div>
-                
-                <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br />
                     <div className = "inner_container">    
-                        
                         <p>Profile</p>
-                        
                         <form onSubmit={this.onSubmit}>
                             <input className = "firstname" type = "text" name = "firstname" placeholder = "first name" onChange={this.onChangeFirstname} />
                             <input className = "lastname" type = "text" name = "lastname" placeholder = "last name" onChange={this.onChangeLastname} />
@@ -147,7 +130,6 @@ class CreateUser extends Component {
 }
 
 CreateUser.propTypes = {
-    logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
   };
   const mapStateToProps = state => ({

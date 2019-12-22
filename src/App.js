@@ -14,7 +14,7 @@ import ForgotPassword from "./components/forgot-password.component";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { setCurrentUser, logoutUser } from "./components/actions/authActions";
 
 
 // Check for token to keep user logged in

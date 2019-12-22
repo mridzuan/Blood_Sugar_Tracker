@@ -3,9 +3,9 @@ import axios from 'axios';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "./actions/authActions";
-//import classnames from "classnames";
 
-/*export default class EntryPage*/class Login extends Component {
+
+class Login extends Component {
     constructor(props) {
         super(props);
 
@@ -16,21 +16,22 @@ import { loginUser } from "./actions/authActions";
         this.state = {
             email: '',
             password: '',
-            redirectTo: '',
-            errors: {},
             message: ''
         }
     }
 
-   componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated) {
-          this.props.history.push("/loggedin"); // push user to dashboard when they login
+    componentDidMount() {
+        // If logged in and user navigates to Login page, should redirect them to dashboard
+        if (this.props.auth.isAuthenticated) {
+          this.props.history.push("/loggedin");
         }
-    if (nextProps.errors) {
-          this.setState({
-            errors: nextProps.errors
-          });
-        }   
+      }
+
+    //Works when I call componentDidUpdate I have to click submit twice
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+        this.props.history.push("/loggedin"); 
+            } 
     }
 
     onChangeEmail(e) {
@@ -46,39 +47,32 @@ import { loginUser } from "./actions/authActions";
     }
 
     onSubmit(e) {
-        e.preventDefault();
+       e.preventDefault();
         
        const userData = {
             email: this.state.email,
             password: this.state.password
           };
     
-   
-          
-          console.log(this.state.errors) // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
-         // console.log(userData)
-            /*const user = {
-                email: this.state.email,
-                password: this.state.password
-            }
-    
-           console.log(user)*/
-    
            axios.post('http://localhost:5000/login/login', userData)
                 .then(res => {
                     if (res) {
-                        console.log(res.data)
-                        this.setState({
-                            message: res.data.toString()
-                        })
-                        //window.location = '/loggedin'
+                        if (res.data.success !== true) {
+                            this.setState({
+                                message: res.data.toString()
+                            })
+                        } else {
+                            this.props.loginUser(userData);
+                        }
+                        
                     } else {
-                        console.log("No response from server.")
+                        this.setState({
+                            message: "No response from server."
+                        })
                     }
                     
                 })
-      // window.location = '/entrypage'*/
-      this.props.loginUser(userData);
+      
         
     }
 
@@ -86,13 +80,6 @@ import { loginUser } from "./actions/authActions";
         return this.state.message
     }
 
-
-    componentDidMount() {
-        // If logged in and user navigates to Login page, should redirect them to dashboard
-        if (this.props.auth.isAuthenticated) {
-          this.props.history.push("/loggedin");
-        }
-      }
 
     render() {
         return (
