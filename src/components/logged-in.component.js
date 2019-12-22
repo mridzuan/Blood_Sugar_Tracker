@@ -62,22 +62,30 @@ let currentUser;
 
                 //Need to only show last 10 readings, but show overall average.
                 //It seems to be filling the newly logged in user with the previous users readings if the new user does not have 10.  However a page refresh fixes it.
-                for (var i = 0; i < sortedBloodSugarArray.length; i++) {
-                        listOfReadings.push(sortedBloodSugarArray[i].level)
-                        listOfDates.push(sortedBloodSugarArray[i].date)
+                for (var j = 0; j < sortedBloodSugarArray.length; j++) {
+                        listOfReadings.push(sortedBloodSugarArray[j].level)
+                        listOfDates.push(sortedBloodSugarArray[j].date)
                 }
 
 
                  //It seems to be filling the newly logged in user with the previous users readings if the new user does not have 10.  However a page refresh fixes it.
-                if (listOfReadings.length < 10) {
+               /* if (listOfReadings.length < 10) {
                     listOfReadings = listOfReadings
                 } else {
                     listOfReadings = listOfReadings.slice(1).slice(-10)
+                }*/
+
+                if (listOfReadings > 10) {
+                    listOfReadings = listOfReadings.slice(1).slice(-10)
                 }
 
-                if (listOfDates.length < 10) {
+               /* if (listOfDates.length < 10) {
                     listOfDates = listOfDates
                 } else {
+                    listOfDates = listOfDates.slice(1).slice(-10)
+                }*/
+
+                if (listOfDates.length > 10) {
                     listOfDates = listOfDates.slice(1).slice(-10)
                 }
                     this.setState({
@@ -127,7 +135,7 @@ let currentUser;
                 message: res.data
             })
             console.log(this.state.message)
-            if (this.state.message == "Reading added!") {
+            if (this.state.message === "Reading added!") {
                 setTimeout(function(){
                     window.location.reload()
                  }, 1000);

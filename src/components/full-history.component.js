@@ -6,9 +6,11 @@ import { logoutUser } from "./actions/authActions";
 
 var listOfReadings =[]
 var listOfDates = []
+let listOfIds = []
 let currentUser;
-let currentReading;
-let itemId;
+//let currentReading;
+//let itemId;
+
 
  class FullHistory extends Component {
     constructor(props) {
@@ -21,7 +23,8 @@ let itemId;
             message: '',
             id: '',
             currentReadingId: [],
-            currentUserId: ''
+            currentUserId: '',
+            idsList: []
         }
         this.deleteItem = this.deleteItem.bind(this)
     }
@@ -45,11 +48,6 @@ let itemId;
                     } 
                 }
 
-                //Get ID of the current reading.
-                for (var i = 0; i < currentUser.bloodSugar.length; i ++) {
-
-                }
-
                 //Sort the array by date so that values display in order.
                 var sortedBloodSugarArray = currentUser.bloodSugar.sort(function(a,b) {
                     a = new Date(a.date)
@@ -59,9 +57,14 @@ let itemId;
                 })
 
                 //Need to only show last 10 readings, but show overall average.
-                for (var i = 0; i < sortedBloodSugarArray.length; i++) {
-                        listOfReadings.push(sortedBloodSugarArray[i].level)
-                        listOfDates.push(sortedBloodSugarArray[i].date)
+                for (var j = 0; j < sortedBloodSugarArray.length; j++) {
+                    listOfReadings.push(sortedBloodSugarArray[j].level)
+                    listOfDates.push(sortedBloodSugarArray[j])
+                }
+
+                 //Get ID of the current reading.
+               for (var  k = 0; k < sortedBloodSugarArray.length; k ++) {
+                    listOfIds.push(sortedBloodSugarArray[k]._id)
                 }
                     this.setState({
                         firstname: user.name,
@@ -69,12 +72,14 @@ let itemId;
                         levelsList: listOfReadings,
                         readings: response.data,
                         datesList: listOfDates,
+                        idsList: listOfIds
                         //currentReadingId: currentUser.bloodSugar[56]._id
                     })
 
                    console.log(currentUser)
                    //console.log(currentUser.bloodSugar[56]._id)
-                   console.log(user.id)
+                   //console.log(user.id)
+                   console.log(listOfDates[0]._id)
             })
             .catch((error) => {
                 console.log(error)
@@ -86,30 +91,30 @@ let itemId;
     }
 
   //Array of collections for each one.  Need to have id as well as date.
-  //itemId = this.renderReadingId()
    deleteItem (id) {
+       console.log(id)
   //  e.preventDefault();
-  // const { user } = this.props.auth;
-   //For some reason it does not want to register user in this function.  I need to figure out a way to have the url include the user id and the object id in order to delete.
-       console.log(id) 
-       const url = "http://localhost:5000/bloodsugar/5df95faeaab2a413519f1de1/5dfc2526c750610efe0e40bb"
-        //axios.delete('http://localhost:5000/bloodsugar/5df95faeaab2a413519f1de1/5dfd0064bcf91f0c74d7a164')
-       /* axios.delete(url)
+
+      const url = `http://localhost:5000/bloodsugar/${this.state.id}/${id}`
+        axios.delete(url)
             .then(res => {
                 console.log(res)
-            })*/
+            })
     }
 
     renderList() {
-        return (this.state.levelsList.map((el) => <li key={el.id}>{el}</li>))
+        return (
+            this.state.levelsList.map((el, i) => 
+                <li key={i}>{el}</li>
+        ))
     }
 
     renderDates() {
-        console.log(this.state.datesList)
+        //console.log(this.state.datesList)
         return ((
-            this.state.datesList.map((el) => 
+            this.state.datesList.map((el, i) => 
               //  <li key={el.id}>{el.substr(0, 10)} <a href="" onClick={this.deleteItem}>delete</a></li>
-                <li value={el.id} onClick={()=> this.deleteItem(el.id)}>delete</li>
+                <li key={i} value={el._id} onClick={()=> this.deleteItem(el._id)}>{el.date.substr(0, 10)} </li>
             )
         ))
     }

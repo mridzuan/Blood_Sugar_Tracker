@@ -78,7 +78,7 @@ class CreateUser extends Component {
                     })
                     
                     console.log(message)
-                    if (this.state.message == "User added! Redirecting you to login page!") {
+                    if (this.state.message === "User added! Redirecting you to login page!") {
                         setTimeout(function(){
                             window.location = '/login';
                          }, 1000);
