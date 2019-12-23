@@ -7,7 +7,7 @@ const userSchema = new Schema(
         lastname: String,
         email: String,
         password: String,
-        resetPassword: '',
+        resetPasswordToken: '',
         resetPassWordExpires: {type: Date},
         bloodSugar:
         [
