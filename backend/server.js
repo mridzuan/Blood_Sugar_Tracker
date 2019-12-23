@@ -35,11 +35,15 @@ const usersRouter = require('./routes/users')
 const bloodsugarRouter = require('./routes/bloodsugar')
 const loginRouter = require('./routes/login')
 const forgotpasswordRouter = require('./routes/forgotpassword')
+const resetpasswordRouter = require('./routes/resetpassword')
+const updatepasswordviaemailRouter = require('./routes/updatePasswordViaEmail')
 
 app.use('/users', usersRouter)
 app.use('/bloodsugar', bloodsugarRouter)
 app.use('/login', loginRouter)
 app.use('/forgotpassword', forgotpasswordRouter)
+app.use('/resetpassword', resetpasswordRouter)
+app.use('/updatepasswordviaemail', updatepasswordviaemailRouter)
 
 
 

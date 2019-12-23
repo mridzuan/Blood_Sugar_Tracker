@@ -1,3 +1,4 @@
+require('dotenv').config()
 const router = require('express').Router()
 let User = require('../models/user.model')
 const nodemailer = require('nodemailer')
@@ -22,13 +23,19 @@ router.route('/forgotpassword').post((req, res) => {
             res.send("Email does not exist. Please register.")
         } else {
             const token = crypto.randomBytes(20).toString('hex')
-            User.update({
-                resetPasswordToken: token,
-                resetPasswordExpires: Date.now() + 3600000
+            //console.log(user)
+            user.update(
+                {
+                    '_id': ObjectId(user._id)
+                },
+                {'$set' : {
+                'resetPasswordToken': token,
+                'resetPasswordExpires': Date.now() + 3600000
+                }
             })
 
             const transporter = nodemailer.createTransport({
-                service: 'protonmail',
+                service: 'gmail',
                 auth: {
                     user: `${process.env.EMAIL_ADDRESS}`,
                     pass: `${process.env.EMAIL_PASSWORD}`
@@ -36,13 +43,13 @@ router.route('/forgotpassword').post((req, res) => {
             })
 
             const mailMessage = {
-                from: `bloodsugartracker@protonmail.com`,
+                from: `bloodsugartracker00@gmail.com`,
                 to: `${user.email}`,
                 subject: `Password Reset Link`,
                 text:
                 `You are receiving this email because there has been a request to reset your password.\n`
-                + `Please click on the following link or paste it in your browser with one hour: \n`
-                + `http://localhost:5000/reset/${token} \n\n`
+                + `Please click on the following link or paste it in your browser within one hour: \n`
+                + `http://localhost:3000/resetpassword/reset/${token} \n\n`
                 + `If you did not make this request, disregard this email.\n`
             }
 
@@ -50,11 +57,10 @@ router.route('/forgotpassword').post((req, res) => {
             //Something happening here.
            transporter.sendMail(mailMessage, (err, res) => {
                 if (err) {
-                    res.json("There was an error.")
-                } else {
-                    res.json("Recovery email has been sent.  Please check your inbox.")
-                }
+                    console.error('there was an error: ', err)
+                } 
             })
+            res.send("Recovery email has been sent.  Please check your inbox.")
 
         }
 

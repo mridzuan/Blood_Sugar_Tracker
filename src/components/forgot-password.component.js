@@ -34,6 +34,7 @@ export default class EntryPage extends Component {
         } else {
             axios.post('http://localhost:5000/forgotpassword/forgotpassword', {email: this.state.email})
                 .then(res => {
+                    
                     this.setState({
                         message: res.data
                     })
