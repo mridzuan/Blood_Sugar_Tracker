@@ -92,7 +92,7 @@ span {
 }
 
 .break {
-  margin-top: 6%;
+  margin-top: 10%;
 }
 
 a {
@@ -118,7 +118,7 @@ a {
 .list {
   display:flex; 
   flex-direction:row;
-  justify-content: space-evenly;
+  justify-content:space-around;
   text-align: center;
   background: white;
   color: black;
@@ -126,17 +126,21 @@ a {
   
 }
 
-.dates {
-  position: absolute;
-  left: 15%;
+/*.dates {
+  position: relative;
+  left: 8%;
   
 }
 
-/*.level {
+.level {
   position: absolute;
-  right: 30%;
+  right: 25%;
 
 }*/
+
+
+
+
 .dateList {
   display:flex; 
   flex-direction:row;

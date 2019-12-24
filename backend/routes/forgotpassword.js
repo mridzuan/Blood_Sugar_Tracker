@@ -5,12 +5,6 @@ const nodemailer = require('nodemailer')
 const crypto =require("crypto")
 
 
-router.route('/').get((req, res) => {
-    User.find()
-        .then(users => res.json(users))
-        .catch(err => res.status(400).json('Error: ' + err))
-})
-
 router.route('/forgotpassword').post((req, res) => {
     const { email } = req.body
 
@@ -23,17 +17,11 @@ router.route('/forgotpassword').post((req, res) => {
             res.send("Email does not exist. Please register.")
         } else {
             const token = crypto.randomBytes(20).toString('hex')
-            //console.log(user)
-            user.update(
-                {
-                    '_id': ObjectId(user._id)
-                },
-                {'$set' : {
-                'resetPasswordToken': token,
-                'resetPasswordExpires': Date.now() + 3600000
-                }
-            })
-
+            //Why is expiration not saving?
+            user.resetPasswordToken = token
+            user.resetPasswordExpires = Date.now() + 3600000
+            user.save()
+            console.log(user)
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
@@ -54,20 +42,15 @@ router.route('/forgotpassword').post((req, res) => {
             }
 
             console.log(mailMessage)
-            //Something happening here.
            transporter.sendMail(mailMessage, (err, res) => {
                 if (err) {
                     console.error('there was an error: ', err)
                 } 
             })
             res.send("Recovery email has been sent.  Please check your inbox.")
-
         }
-
-
     })
 })
-
 
 
 

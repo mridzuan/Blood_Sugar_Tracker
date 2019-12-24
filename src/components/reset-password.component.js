@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+
 export default class ResetPassword extends Component {
     constructor(props) {
         super(props);
+
+        this.onChangePassword1 = this.onChangePassword1.bind(this)
+        this.onChangePassword2 = this.onChangePassword2.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
 
         this.state = {
             email: '',
@@ -11,21 +16,18 @@ export default class ResetPassword extends Component {
             password2: '',
             message: ''
         }
-
-        this.onChangePassword1 = this.onChangePassword1.bind(this)
-        this.onChangePassword2 = this.onChangePassword2.bind(this)
+        
     }
 
-    async componentDidMount() {
-        console.log(this.props.match.params.token)
-        await axios 
-            .get('http://localhost:5000/resetpassword/reset/', {
+    componentDidMount() {
+        let resetToken = (window.location.pathname).slice(21)
+        console.log(resetToken)
+        axios.get('http://localhost:5000/resetpassword/reset/', {
                 params: {
-                    resetPasswordToken: this.props.match.params.token,
+                    resetPasswordToken: resetToken
                 }
             })
             .then(res => {
-                console.log(res)
                 if (res.data.message === "Password reset link ok.") {
                     this.setState({
                         email: res.data.email,
@@ -35,9 +37,8 @@ export default class ResetPassword extends Component {
             })
             .catch(err => {
                 console.log(err.data)
-            })   
+            }) 
     }
-
 
     onChangePassword1(e) {
         this.setState({
@@ -57,19 +58,23 @@ export default class ResetPassword extends Component {
 
     onSubmit(e) {
         e.preventDefault()
-
-        axios.put('http://localhost:5000/updatePasswordViaEmail', {
+        const user = {
             email: this.state.email,
-            password: this.state.password2
-        })
-        .then (res => {
-            console.log(res.data)
-            if (res.data.message === 'Password updated.') {
+            password2: this.state.password2
+        }
+       
+        axios.post('http://localhost:5000/updatePasswordViaEmail/updatePasswordViaEmail', user)
+            .then ((res) => {
                 this.setState({
-                    message: res.data.massage
+                    message: res.data
                 })
-            }
-        })
+                
+                if (this.state.message === "Password updated! Redirecting you to login page!") {
+                    setTimeout(function(){
+                        window.location = '/login';
+                     }, 1000);
+                }
+            })
         .catch(err => {
             console.log(err.data)
         })

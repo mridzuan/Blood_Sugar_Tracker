@@ -92,7 +92,7 @@ import { logoutUser } from "./actions/authActions";
        // let dots = [['.']]
         return(
             this.state.readings.map((el, k) => 
-            <li key={k}></li>
+            <li key={k}>..................</li>
         ))
     }
 
@@ -153,27 +153,18 @@ import { logoutUser } from "./actions/authActions";
                     <h1>Welcome {this.state.firstname.charAt(0).toUpperCase() + this.state.firstname.substring(1)}</h1>
                         <p>Here are your most recent readings.</p>
                         <div className = "list">
-                        <div className = "dates">
-                        <ul>
-                                <p><u>Date</u></p>
-                                {this.renderDates()} 
-                            </ul>
-                        </div>
-                        <div className = "dots">
-                            <ul><br /><br />
-                                {this.renderDots()}
-                            </ul>
-                        </div>
-                            
-                           
-                            <div className = "level">
+                            <div className = "dates">
                             <ul>
-                                <p><u>Level</u></p>
-                                {this.renderList()}
-                            </ul>
-
+                                    <p><u>Date</u></p>
+                                    {this.renderDates()} 
+                                </ul>
                             </div>
-                            
+                            <div className = "level">
+                                <ul>
+                                    <p><u>Level</u></p>
+                                    {this.renderList()}
+                                </ul>
+                            </div>
                         </div>
                 </div>
                 <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br />

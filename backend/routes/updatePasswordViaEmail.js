@@ -5,30 +5,23 @@ const bcrypt = require('bcrypt')
 
 const BCRYPT_SALT_ROUNDS = 12;
 
-router.route('/updatepasswordviaemail').put((req, res) => {
-    User.findOne({
-        where: {
-            email: req.body.email
-        }
-    }).then(user => {
-        if (user !== null) {
-            console.log('user exists in db')
-            bcrypt
-                .hash(req.body.password2, BCRYPT_SALT_ROUNDS)
-                .then(hashedPassword => {
-                    user.update({
-                        password: hashedPassword,
-                        resetPasswordToken: null,
-                        resetPasswordExpires: null
-                    })
-                })
-                .then(() => {
-                    console.log("password updated")
-                    res.send("Password updated.")
-                })
+router.route('/updatepasswordviaemail').post((req, res) => {
+    User.findOne({email: req.body.email}, (err, result) => {
+        if (err) {
+            res.send("Error contacting database")
+        } else if (!result) {
+            res.send("User not found.")
         } else {
-            console.log("No user in db.")
-            res.send("No such user.")
+            bcrypt.hash(req.body.password2, BCRYPT_SALT_ROUNDS, (err, hash) => {
+                if (err) {
+                    res.send("crypt err lv 2!")
+                } else {
+                    result.password = hash;
+                    result.save()
+                        .then(() => res.json('Password updated! Redirecting you to login page!'))
+                        .catch(err => res.status(400).json('Error: ' + err))
+                }
+            })
         }
     })
 })

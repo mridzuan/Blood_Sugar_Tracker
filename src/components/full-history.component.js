@@ -71,8 +71,8 @@ import { logoutUser } from "./actions/authActions";
         return ((
             this.state.readings.map((el, j, k) => 
             <div className = "dateList" key={j}>
+                <li key={k} className = "delete" value={el._id} onClick={()=> this.deleteItem(el._id)}><u>delete</u>&emsp;</li>
                 <li key={j}>{el.date.substr(0, 10)}</li>
-                <li key={k} className = "delete" value={el._id} onClick={()=> this.deleteItem(el._id)}>&emsp;&emsp;<u>delete</u></li>
             </div>
             )
         ))
@@ -114,12 +114,12 @@ import { logoutUser } from "./actions/authActions";
                         <p>Here is your full history of readings.</p>
                         <div className = "list">
                             <ul>
-                                <p><u>Level</u></p>
-                                {this.renderList()} 
-                            </ul>
-                            <ul>
                                 <p><u>Date</u></p>
                                 {this.renderDates()}
+                            </ul>
+                            <ul>
+                                <p><u>Level</u></p>
+                                {this.renderList()} 
                             </ul>
                         </div>
                         <p>Your average blood sugar level is: {this.averageReading()}</p>
