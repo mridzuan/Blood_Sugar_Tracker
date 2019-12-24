@@ -74,8 +74,21 @@ input[type=submit]:hover {
 ul {
   font-size: .85rem;
   list-style: none;
-  
 }
+
+.levelRendered {
+  font-size: 1.5rem;
+}
+
+.dateRendered {
+  font-size: 1rem;
+}
+
+.timeRendered {
+  border: 2px solid grey;
+  font-size: .75rem;;
+}
+
 
 ol {
   text-align: left;

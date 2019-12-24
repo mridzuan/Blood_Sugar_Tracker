@@ -18,7 +18,6 @@ router.route('/reset').get((req, res) => {
                     email: result.email,
                     message: 'Password reset link ok.'
                 })
-            
             }
         })
 })

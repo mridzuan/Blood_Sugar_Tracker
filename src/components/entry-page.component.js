@@ -27,7 +27,7 @@ class Login extends Component {
         }
       }
 
-    //Works when I call componentDidUpdate I have to click submit twice
+    //Works when I call componentDidUpdate but I have to click submit twice
     UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
         this.props.history.push("/loggedin"); 
@@ -72,8 +72,6 @@ class Login extends Component {
                     }
                     
                 })
-      
-        
     }
 
     renderMessage() {
@@ -88,7 +86,6 @@ class Login extends Component {
                     <div className = "inner_container">    
                         <h1>Blood Sugar Tracker</h1>
                             <p>An app for diabetics</p>
-                            
                             <form onSubmit={this.onSubmit}>
                                 <input className = "email" type = "text" name = "email" placeholder = "email" onChange={this.onChangeEmail} />
                                 <input className = "pword" type = "password" name = "password" placeholder = "password" onChange={this.onChangePassword} />

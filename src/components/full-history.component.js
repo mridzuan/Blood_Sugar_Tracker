@@ -103,15 +103,15 @@ import { logoutUser } from "./actions/authActions";
     render() {
         return (
             <div>
-            <div className = "back">
-                <a href="/loggedin">---Back to submit reading.</a>
-            </div>
+                <div className = "back">
+                    <a href="/loggedin">---Back to submit reading.</a>
+                </div>
                 <div className = "logout">
                     <a href="/login" onClick={this.onLogoutClick}>Log out</a>
                 </div>
                 <div className = "info">
-                <h1>Welcome {this.state.firstname.charAt(0).toUpperCase() + this.state.firstname.substring(1)}</h1>
-                        <p>Here is your full history of readings.</p>
+                    <h1>Welcome {this.state.firstname.charAt(0).toUpperCase() + this.state.firstname.substring(1)}</h1>
+                    <p>Here is your full history of readings.</p>
                         <div className = "list">
                             <ul>
                                 <p><u>Date</u></p>
@@ -122,9 +122,9 @@ import { logoutUser } from "./actions/authActions";
                                 {this.renderList()} 
                             </ul>
                         </div>
-                        <p>Your average blood sugar level is: {this.averageReading()}</p>
-                        <p>{this.renderMessage()}</p>   
-                </div>
+                    <p>Your average blood sugar level is: {this.averageReading()}</p>
+                    <p>{this.renderMessage()}</p>   
+                 </div>
             </div>
         )
     }

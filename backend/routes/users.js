@@ -3,7 +3,6 @@ const router = require('express').Router()
 let User = require('../models/user.model')
 
 
-
 router.route('/add').post((req, res) => {
     const { firstname } = req.body
     const { lastname } = req.body
@@ -35,7 +34,7 @@ router.route('/add').post((req, res) => {
                                     resetPassWordExpires: '',
                                 }
                             )
-                            // Hash password before saving in database
+                        // Hash password before saving in database
                         bcrypt.genSalt(10, (err, salt) => {
                             if (err) {
                                 res.send("crypt erro!")
@@ -69,5 +68,6 @@ router.route('/add').post((req, res) => {
         res.send("Please enter a valid first name.")
     }                         
 })
+
 
 module.exports = router

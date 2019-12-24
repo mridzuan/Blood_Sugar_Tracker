@@ -5,14 +5,6 @@ const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
 
 
-
-
-router.route('/').get((req, res) => {
-    User.find()
-        .then(users => res.json(users))
-        .catch(err => res.status(400).json('Error: ' + err))
-})
-
 router.route('/login').post((req, res) => {
     const { email } = req.body
     const { password } = req.body
@@ -26,13 +18,10 @@ router.route('/login').post((req, res) => {
             } else {
                 bcrypt.compare(password, user.password).then((result) => {
                   if (result) {
-                      // User matched
-                        // Create JWT Payload
                         const payload = {
                             id: user.id,
                             name: user.firstname
                   }
-                  
                   jwt.sign(
                     payload,
                     keys.secretOrKey,
@@ -57,4 +46,5 @@ router.route('/login').post((req, res) => {
         res.send("Invalid email format")
     }
 })
+
 module.exports = router

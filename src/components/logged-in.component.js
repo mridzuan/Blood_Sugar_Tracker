@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css"
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "./actions/authActions";
+import moment from "moment";
 
 
  class Dashboard extends Component {
@@ -47,8 +48,8 @@ import { logoutUser } from "./actions/authActions";
                     firstname: user.name,
                     id: user.id,
                     allReadings: sortedBloodSugarArray,
-                    //Set to only display 10 most recent readings
-                    readings: sortedBloodSugarArray.slice(0).slice(-10)
+                    //Set to only display 5 most recent readings
+                    readings: sortedBloodSugarArray.slice(0).slice(-5)
                 })
             })
             .catch((error) => {
@@ -76,15 +77,24 @@ import { logoutUser } from "./actions/authActions";
 
     renderList() {
         return (
-            this.state.readings.map((el, i) => 
-            <li key={i}>{el.level}</li>
+            this.state.readings.map((el, i) =>
+            <div className = "levelRendered">
+                <li key={i}>{el.level}</li><br />
+            </div> 
         ))
     }
 
     renderDates() {
         return (
-            this.state.readings.map((el, j) => 
-            <li key={j}>{el.date.substr(0, 10)}</li>
+            this.state.readings.map((el, j, k) => 
+            <div className = "dateAndTime">
+                <div className = "dateRendered">
+                    <li key={j}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(0, 13)}</li>
+                </div>
+                <div className = "timeRendered">
+                    <li key={k}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(13, 20)}</li>
+                </div><br /> 
+            </div>
         ))
     }
 
@@ -167,7 +177,7 @@ import { logoutUser } from "./actions/authActions";
                             </div>
                         </div>
                 </div>
-                <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                     <p>Your average blood sugar level is: {this.averageReading()}</p>
                     <p>See your <a href="/fullhistory">full history</a>.</p><br />
                     <div className = "inner_container">

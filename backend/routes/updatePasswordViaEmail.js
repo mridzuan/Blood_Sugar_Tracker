@@ -1,6 +1,5 @@
 const router = require('express').Router()
-let User = require('../models/user.model')
-
+const User = require('../models/user.model')
 const bcrypt = require('bcrypt')
 
 const BCRYPT_SALT_ROUNDS = 12;
@@ -11,7 +10,7 @@ router.route('/updatepasswordviaemail').post((req, res) => {
             res.send("Error contacting database")
         } else if (!result) {
             res.send("User not found.")
-        } else {
+        } else if (req.body.password1 === req.body.password2) {
             bcrypt.hash(req.body.password2, BCRYPT_SALT_ROUNDS, (err, hash) => {
                 if (err) {
                     res.send("crypt err lv 2!")
@@ -22,6 +21,8 @@ router.route('/updatepasswordviaemail').post((req, res) => {
                         .catch(err => res.status(400).json('Error: ' + err))
                 }
             })
+        } else {
+            res.send("Please make sure your passwords match.")
         }
     })
 })

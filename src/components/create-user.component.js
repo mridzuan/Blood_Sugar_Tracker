@@ -13,7 +13,6 @@ class CreateUser extends Component {
         this.onChangeEmail = this.onChangeEmail.bind(this)
         this.onChangePassword1 = this.onChangePassword1.bind(this)
         this.onChangePassword2 = this.onChangePassword2.bind(this)
-
         this.onSubmit = this.onSubmit.bind(this)
 
         this.state = {
