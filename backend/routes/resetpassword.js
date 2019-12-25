@@ -4,22 +4,21 @@ let User = require('../models/user.model')
 //Need to figure out why expiration is not saving.
 router.route('/reset').get((req, res) => {
     User.findOne({
-            resetPasswordToken: req.query.resetPasswordToken/*,
-            resetPasswordExpires: {
+            resetPasswordToken: req.query.resetPasswordToken,
+            tokenExpiration: {
                 $gt: Date.now()
-            }*/
-        }, (err, result) => {
-            if (err) {
-                res.send("Error reading database")
-            } else if (!result) {
+            }
+        }).then(user => {
+            if (!user) {
                 res.send("Password reset link is invalid or has expired.")
             } else {
                 res.send({
-                    email: result.email,
+                    email: user.email,
                     message: 'Password reset link ok.'
                 })
             }
         })
-})
+    })
+
 
 module.exports = router

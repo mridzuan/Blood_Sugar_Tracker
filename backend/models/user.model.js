@@ -8,8 +8,8 @@ const userSchema = new Schema(
         email: String,
         password: String,
         resetPasswordToken: String,
-        resetPassWordExpires: {type: Date},
-        bloodSugar:
+        tokenExpiration: Number,
+        bloodSugar: 
         [
             {
                 level: Number,

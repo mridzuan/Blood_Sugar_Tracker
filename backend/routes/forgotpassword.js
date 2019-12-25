@@ -19,7 +19,7 @@ router.route('/forgotpassword').post((req, res) => {
             const token = crypto.randomBytes(20).toString('hex')
             //Why is expiration not saving?
             user.resetPasswordToken = token
-            user.resetPasswordExpires = Date.now() + 3600000
+            user.tokenExpiration = Date.now() + 3600000,
             user.save()
             console.log(user)
             const transporter = nodemailer.createTransport({
@@ -41,7 +41,7 @@ router.route('/forgotpassword').post((req, res) => {
                 + `If you did not make this request, disregard this email.\n`
             }
 
-            console.log(mailMessage)
+
            transporter.sendMail(mailMessage, (err, res) => {
                 if (err) {
                     console.error('there was an error: ', err)

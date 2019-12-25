@@ -85,7 +85,7 @@ ul {
 }
 
 .timeRendered {
-  border: 2px solid grey;
+ 
   font-size: .75rem;;
 }
 
@@ -105,7 +105,7 @@ span {
 }
 
 .break {
-  margin-top: 10%;
+  margin-top: 1%;
 }
 
 a {
@@ -151,7 +151,10 @@ a {
 
 }*/
 
-
+.level li:nth-of-type(2) {
+  color: red;
+  font-size: .75rem;
+}
 
 
 .dateList {

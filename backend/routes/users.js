@@ -31,7 +31,7 @@ router.route('/add').post((req, res) => {
                                     email: email,
                                     password: password2,
                                     resetPasswordToken: '',
-                                    resetPassWordExpires: '',
+                                    tokenExpiration: Date.now(),
                                 }
                             )
                         // Hash password before saving in database

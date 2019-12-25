@@ -24,11 +24,12 @@ import moment from "moment";
             date: new Date(),
             allReadings: [],
             readings: [],
-            message: ''
+            message: '',
+            category: ''
         }
     }
 
-    
+
     componentDidMount() {
         const { user } = this.props.auth;
  
@@ -43,6 +44,24 @@ import moment from "moment";
                 const sortedBloodSugarArray = currentUser[0].bloodSugar.sort((a,b) =>
                     new Date(a.date) - new Date(b.date)  
                 )
+                //Get low, high, normal value.
+                currentUser[0].bloodSugar.map(el => {
+                    console.log(el.level)
+                    if (el.level > 140) {
+                        this.setState({
+                            category: "high"
+                        })
+                    } else if (el.level < 70) {
+                        this.setState({
+                            category: "Low"
+                        })
+                    } else {
+                        this.setState({
+                            category: "Normal"
+                        })
+                }
+            })
+               
 
                 this.setState({
                     firstname: user.name,
@@ -74,12 +93,17 @@ import moment from "moment";
             date: date
         })
     }
-
+    
     renderList() {
+        const divStyle = {
+            lineHeight: '20px'
+        }
+
         return (
-            this.state.readings.map((el, i) =>
-            <div className = "levelRendered">
-                <li key={i}>{el.level}</li><br />
+            this.state.readings.map((el, h, i) =>
+            <div className = "levelRendered" style={divStyle} >
+                <li key={h}>{el.level}</li>
+               <li key={i}>{this.state.category}</li><br />
             </div> 
         ))
     }
@@ -92,19 +116,19 @@ import moment from "moment";
                     <li key={j}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(0, 13)}</li>
                 </div>
                 <div className = "timeRendered">
-                    <li key={k}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(13, 20)}</li>
-                </div><br /> 
+                    <li key={k}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(13, 20)}</li><br /><br /> 
+                </div>
             </div>
         ))
     }
 
-    renderDots() {
+    /*renderDots() {
        // let dots = [['.']]
         return(
             this.state.readings.map((el, k) => 
             <li key={k}>..................</li>
         ))
-    }
+    }*/
 
     //All time average
     averageReading() {
@@ -164,20 +188,18 @@ import moment from "moment";
                         <p>Here are your most recent readings.</p>
                         <div className = "list">
                             <div className = "dates">
-                            <ul>
-                                    <p><u>Date</u></p>
+                                <ul>
                                     {this.renderDates()} 
                                 </ul>
                             </div>
                             <div className = "level">
                                 <ul>
-                                    <p><u>Level</u></p>
                                     {this.renderList()}
                                 </ul>
                             </div>
                         </div>
                 </div>
-                <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                     <p>Your average blood sugar level is: {this.averageReading()}</p>
                     <p>See your <a href="/fullhistory">full history</a>.</p><br />
                     <div className = "inner_container">
