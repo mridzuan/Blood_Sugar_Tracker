@@ -8,8 +8,6 @@ import { logoutUser } from "./actions/authActions";
 import moment from "moment";
 
 
-let readingCategory;
-
  class Dashboard extends Component {
     constructor(props) {
         super(props);
@@ -26,8 +24,7 @@ let readingCategory;
             date: new Date(),
             allReadings: [],
             readings: [],
-            message: '',
-            category: ''
+            message: ''
         }
     }
 
@@ -46,9 +43,6 @@ let readingCategory;
                 const sortedBloodSugarArray = currentUser[0].bloodSugar.sort((a,b) =>
                     new Date(a.date) - new Date(b.date)  
                 )
-
-                
-               
 
                 this.setState({
                     firstname: user.name,
@@ -80,38 +74,44 @@ let readingCategory;
             date: date
         })
     }
+
+    //Category based on level.
+    renderCategory(lev) {
+        let readingCategory;
+        if (lev > 140) {
+            readingCategory = "High"
+        } else if (lev < 70) {
+            readingCategory = "Low"
+        } else {
+            readingCategory = "Normal"
+        }
+
+        return readingCategory
+    }
+
+    //Color of category based on level.
+    categoryStyle(lev) {
+        if (lev > 140) {
+            return {
+                color: 'red'
+            }
+        } else if (lev < 70) {
+            return {
+                color: 'blue'
+            }
+        } else {
+            return {
+                color: 'green'
+            }
+        }
+    }
     
     renderList() {
-        //Get low, high, normal value.
-        this.state.readings.map(el => {
-            console.log(el.level)
-            if (el.level > 140) {
-                readingCategory = "High"
-                /*this.setState({
-                    category: "high"
-                })*/
-            } else if (el.level < 70) {
-                /*this.setState({
-                    category: "Low"
-                })*/
-                readingCategory = "Low"
-            } else {
-                /*this.setState({
-                    category: "Normal"
-                })*/
-                readingCategory = "Normal"
-        }
-    })
-
-        const divStyle = {
-            lineHeight: '20px'
-        }
-
         return (
             this.state.readings.map((el, h, i) =>
-            <div className = "levelRendered" style={divStyle} >
+            <div className = "levelRendered" >
                 <li key={h}>{el.level}</li>
-               <li key={i}>{readingCategory}</li><br />
+                <li key={i} style = {this.categoryStyle(el.level)}>{this.renderCategory(el.level)}</li><br />
             </div> 
         ))
     }

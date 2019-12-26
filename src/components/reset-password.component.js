@@ -33,6 +33,10 @@ export default class ResetPassword extends Component {
                         email: res.data.email,
                         message: res.data.message
                     })
+                } else {
+                    this.setState({
+                        message: res.data
+                    })
                 }
             })
             .catch(err => {

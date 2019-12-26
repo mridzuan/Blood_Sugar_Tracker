@@ -3,7 +3,7 @@ import axios from 'axios'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "./actions/authActions";
-
+import moment from "moment";
 
  class FullHistory extends Component {
     constructor(props) {
@@ -60,21 +60,65 @@ import { logoutUser } from "./actions/authActions";
             })
     }
 
+    //Category based on level.
+    renderCategory(lev) {
+        let readingCategory;
+        if (lev > 140) {
+            readingCategory = "High"
+        } else if (lev < 70) {
+            readingCategory = "Low"
+        } else {
+            readingCategory = "Normal"
+        }
+
+        return readingCategory
+    }
+
+    //Need to reduce font-size on smaller screens...
+    //Color of category based on level.
+    categoryStyle(lev) {
+        if (lev > 140) {
+            return {
+                color: 'red',
+                fontSize: '.85rem'
+            }
+        } else if (lev < 70) {
+            return {
+                color: 'blue',
+                fontSize: '.85rem'
+            }
+        } else {
+            return {
+                color: 'green',
+                fontSize: '.85rem'
+            }
+        }
+    }
+
     renderList() {
         return (
-            this.state.readings.map((el, i) => 
-                <li key={i}>{el.level}</li>
-        ))
+            this.state.readings.map((el, h, i) =>
+            <div className = "levelRendered2" >
+                <li key={h}>{el.level}</li>
+                <li key={i} style = {this.categoryStyle(el.level)}>{this.renderCategory(el.level)}</li><br />
+            </div>
+        ))    
     }
 
     renderDates() {
-        return ((
+        return (
             this.state.readings.map((el, j, k) => 
-            <div className = "dateList" key={j}>
-                <li key={k} className = "delete" value={el._id} onClick={()=> this.deleteItem(el._id)}><u>delete</u>&emsp;</li>
-                <li key={j}>{el.date.substr(0, 10)}</li>
+            <div className = "dateAndTime">
+                <div className = "dateRendered">
+                    <li key={j}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(0, 13)}</li>
+                </div>
+                <div className = "timeRendered">
+                    <li key={k}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(13, 20)}</li>
+                </div>
+                <div className = "delete">
+                    <li key={k} className = "delete" value={el._id} onClick={()=> this.deleteItem(el._id)}><u>delete</u>&emsp;</li><br /> <br /> <br /> 
+                </div>
             </div>
-            )
         ))
     }
 
@@ -114,11 +158,9 @@ import { logoutUser } from "./actions/authActions";
                     <p>Here is your full history of readings.</p>
                         <div className = "list">
                             <ul>
-                                <p><u>Date</u></p>
                                 {this.renderDates()}
                             </ul>
                             <ul>
-                                <p><u>Level</u></p>
                                 {this.renderList()} 
                             </ul>
                         </div>

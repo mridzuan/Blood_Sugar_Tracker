@@ -78,6 +78,12 @@ ul {
 
 .levelRendered {
   font-size: 1.5rem;
+  line-height: 20px;
+}
+
+.levelRendered2 {
+  font-size: 1.5rem;
+  line-height: 28px;
 }
 
 .dateRendered {
@@ -85,18 +91,11 @@ ul {
 }
 
 .timeRendered {
- 
   font-size: .75rem;;
 }
 
-
-ol {
-  text-align: left;
-}
-span {
-  list-style: none;
-  flex-direction:row;
-  justify-content: center;
+.delete {
+  font-size: .7rem;
 }
 
 .info {
@@ -111,22 +110,6 @@ span {
 a {
   color: black;
 }
-/*.list {
-  position: absolute;
-  top: 36%;
-  left: 50%;
-  width: 35%;
-  height: 25%;
-  margin-top: -200px;
-  margin-left:  -18%;
-  border-radius: 20px;
-  background: #fff;
-  background: white;
-  color: black;
-  display:flex; 
-  flex-direction:row;
-  justify-content: center;
-}*/
 
 .list {
   display:flex; 
@@ -139,23 +122,9 @@ a {
   
 }
 
-/*.dates {
-  position: relative;
-  left: 8%;
-  
-}
-
-.level {
-  position: absolute;
-  right: 25%;
-
-}*/
-
 .level li:nth-of-type(2) {
-  color: red;
   font-size: .75rem;
 }
-
 
 .dateList {
   display:flex; 
@@ -205,12 +174,31 @@ a {
   ul {
       font-size: .5rem;
   }
-  
-}
+  .levelRendered {
+    font-size: 1rem;
+    line-height: 14px;
+  }
 
-@media screen and (max-width: 750px) {
-  ol {
-      font-size: .5rem;
+  .levelRendered2 {
+    font-size: 1rem;
+    line-height: 19px;
+  }
+  
+  .dateRendered {
+    font-size: .75rem;
+  }
+  
+  .timeRendered {
+    font-size: .5rem;;
+  }
+  
+  .delete {
+    font-size: .5rem;
+  }
+
+  .level li:nth-of-type(2) {
+    font-size: .5rem;
   }
   
 }
+
