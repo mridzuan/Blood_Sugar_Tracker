@@ -17,11 +17,11 @@ router.route('/forgotpassword').post((req, res) => {
             res.send("Email does not exist. Please register.")
         } else {
             const token = crypto.randomBytes(20).toString('hex')
-            //Why is expiration not saving?
+
             user.resetPasswordToken = token
             user.tokenExpiration = Date.now() + 3600000,
             user.save()
-            console.log(user)
+ 
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {

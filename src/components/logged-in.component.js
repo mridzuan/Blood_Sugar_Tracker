@@ -8,6 +8,8 @@ import { logoutUser } from "./actions/authActions";
 import moment from "moment";
 
 
+let readingCategory;
+
  class Dashboard extends Component {
     constructor(props) {
         super(props);
@@ -44,23 +46,8 @@ import moment from "moment";
                 const sortedBloodSugarArray = currentUser[0].bloodSugar.sort((a,b) =>
                     new Date(a.date) - new Date(b.date)  
                 )
-                //Get low, high, normal value.
-                currentUser[0].bloodSugar.map(el => {
-                    console.log(el.level)
-                    if (el.level > 140) {
-                        this.setState({
-                            category: "high"
-                        })
-                    } else if (el.level < 70) {
-                        this.setState({
-                            category: "Low"
-                        })
-                    } else {
-                        this.setState({
-                            category: "Normal"
-                        })
-                }
-            })
+
+                
                
 
                 this.setState({
@@ -95,6 +82,27 @@ import moment from "moment";
     }
     
     renderList() {
+        //Get low, high, normal value.
+        this.state.readings.map(el => {
+            console.log(el.level)
+            if (el.level > 140) {
+                readingCategory = "High"
+                /*this.setState({
+                    category: "high"
+                })*/
+            } else if (el.level < 70) {
+                /*this.setState({
+                    category: "Low"
+                })*/
+                readingCategory = "Low"
+            } else {
+                /*this.setState({
+                    category: "Normal"
+                })*/
+                readingCategory = "Normal"
+        }
+    })
+
         const divStyle = {
             lineHeight: '20px'
         }
@@ -103,10 +111,11 @@ import moment from "moment";
             this.state.readings.map((el, h, i) =>
             <div className = "levelRendered" style={divStyle} >
                 <li key={h}>{el.level}</li>
-               <li key={i}>{this.state.category}</li><br />
+               <li key={i}>{readingCategory}</li><br />
             </div> 
         ))
     }
+    
 
     renderDates() {
         return (
@@ -122,26 +131,18 @@ import moment from "moment";
         ))
     }
 
-    /*renderDots() {
-       // let dots = [['.']]
-        return(
-            this.state.readings.map((el, k) => 
-            <li key={k}>..................</li>
-        ))
-    }*/
-
     //All time average
     averageReading() {
         var total = 0;
         for (var i = 0; i < this.state.allReadings.length; i++) {
             total += this.state.allReadings[i].level;
         }
+
         if (isNaN(Math.round(total / this.state.allReadings.length))) {
             return ""
         } else {
             return Math.round(total / this.state.allReadings.length);
-        }
-        
+        }  
     }
 
     renderMessage() {
