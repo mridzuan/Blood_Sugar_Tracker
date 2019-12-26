@@ -24,7 +24,8 @@ import moment from "moment";
             date: new Date(),
             allReadings: [],
             readings: [],
-            message: ''
+            message: '',
+            listMessage: ''
         }
     }
 
@@ -43,6 +44,13 @@ import moment from "moment";
                 const sortedBloodSugarArray = currentUser[0].bloodSugar.sort((a,b) =>
                     new Date(a.date) - new Date(b.date)  
                 )
+
+                //If no readings are available, display a message.
+                if (sortedBloodSugarArray.length === 0) {
+                    this.setState({
+                        listMessage: "Your readings will display here"
+                    })
+                }
 
                 this.setState({
                     firstname: user.name,
@@ -163,12 +171,10 @@ import moment from "moment";
              this.setState({
                  message: res.data
              })
-             console.log(this.state.message)
              if (this.state.message === "Reading added!") {
                  setTimeout(function(){
                      window.location.reload()
-                  }, 1000);
-                  
+                  }, 1000); 
              }
          }) 
      }
@@ -178,21 +184,40 @@ import moment from "moment";
         this.props.logoutUser();
     }
 
+    listStyle(item) {
+        if (item === "Your readings will display here") {
+            return {
+                justifyContent: 'center'
+            }
+        }
+    }
+
+    recentStyle(item) {
+        if (item === "Your readings will display here") {
+            return {
+                visibility: 'hidden'
+            }
+        }
+    }
+
     render() {
         return (
-            <div>
+            <div className = "main">
                 <div className = "logout">
                     <a href="/login" onClick={this.onLogoutClick}>Log out</a>
                 </div>
                 <div className = "info">
                     <h1>Welcome {this.state.firstname.charAt(0).toUpperCase() + this.state.firstname.substring(1)}</h1>
-                        <p>Here are your most recent readings.</p>
-                        <div className = "list">
+                        <p style = {this.recentStyle(this.state.listMessage)}>Here are your most recent readings</p><br />
+                        <div className = "list" style = {this.listStyle(this.state.listMessage)}>
                             <div className = "dates">
                                 <ul>
                                     {this.renderDates()} 
                                 </ul>
                             </div>
+                            <div className="listMessage">
+                                {this.state.listMessage}
+                        </div><br /><br /><br /><br /><br />
                             <div className = "level">
                                 <ul>
                                     {this.renderList()}
@@ -200,17 +225,17 @@ import moment from "moment";
                             </div>
                         </div>
                 </div>
-                <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-                    <p>Your average blood sugar level is: {this.averageReading()}</p>
+                <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    <p>Your average blood sugar level is: <span style = {this.categoryStyle(this.averageReading())}>{this.averageReading()}</span></p>
                     <p>See your <a href="/fullhistory">full history</a>.</p><br />
                     <div className = "inner_container">
                             <p>New Reading</p>
                             <form onSubmit={this.onSubmit}>
-                                <input className = "newreading" type = "text" name = "newreading" placeholder = "Enter your number" onChange = {this.onChangeLevel} />
+                                <input className = "newreading" type = "text" name = "newreading" placeholder = "Level" onChange = {this.onChangeLevel} style={{textAlign: 'center'}}/>
                                 <input type = "submit" value = "Submit"/>
                                 <div className="dateform">
                                     <label>Date: </label>
-                                    <div>
+                                    <div >
                                         <DatePicker
                                         selected={this.state.date}
                                         onChange={this.onChangeDate}

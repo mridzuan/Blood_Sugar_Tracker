@@ -48,7 +48,7 @@ export default class EntryPage extends Component {
                     <div className = "inner_container">    
                         <h1>Forgot your password?</h1>
                             <form onSubmit={this.onSubmit}>
-                                <input className = "email" type = "text" name = "email" placeholder = "email" onChange={this.onChangeEmail} />
+                                <input className = "email" type = "text" name = "email" placeholder = "email" onChange={this.onChangeEmail} style={{textAlign: 'center'}}/>
                                 <input type = "submit" value = "Reset" />
                             </form>
                             <p>{this.renderMessage()}</p> 

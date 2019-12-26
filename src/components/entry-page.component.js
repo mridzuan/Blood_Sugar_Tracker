@@ -87,7 +87,7 @@ class Login extends Component {
                         <h1>Blood Sugar Tracker</h1>
                             <p>An app for diabetics</p>
                             <form onSubmit={this.onSubmit}>
-                                <input className = "email" type = "text" name = "email" placeholder = "email" onChange={this.onChangeEmail} />
+                                <input className = "email" type = "text" name = "email" placeholder = "email" onChange={this.onChangeEmail} style={{textAlign: 'left'}} />
                                 <input className = "pword" type = "password" name = "password" placeholder = "password" onChange={this.onChangePassword} />
                                 <input type = "submit" value = "Login" />
                             </form>

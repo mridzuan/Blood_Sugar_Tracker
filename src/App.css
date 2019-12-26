@@ -9,6 +9,10 @@ body {
   background-color: rgb(3, 30, 150);
 }
 
+.main {
+  height: 100vh;
+}
+
 h1 {
   font-size: 2rem;
   text-align: center;
@@ -34,7 +38,6 @@ p {
   margin-left: auto;
   margin-right: auto;
   height: 400px;
-
 }
 
 input[type=text], select {
@@ -45,6 +48,7 @@ input[type=text], select {
   border: 2px solid black;
   border-radius: 4px;
   box-sizing: border-box;
+  text-align: center;
 }
 
 input[type=password] {
@@ -55,6 +59,7 @@ input[type=password] {
   border: 2px solid black;
   border-radius: 4px;
   box-sizing: border-box;
+  text-align: left;
 }
 
 input[type=submit] {
@@ -65,6 +70,8 @@ input[type=submit] {
   border: 2px solid black;
   border-radius: 4px;
   cursor: pointer;
+  text-align: center;
+  padding-left: 15px;
 }
 
 input[type=submit]:hover {
@@ -86,8 +93,13 @@ ul {
   line-height: 28px;
 }
 
+.levelRendered2 li:nth-of-type(2) {
+  font-size: .75rem;
+}
+
 .dateRendered {
   font-size: 1rem;
+  line-height: 18px;
 }
 
 .timeRendered {
@@ -114,12 +126,21 @@ a {
 .list {
   display:flex; 
   flex-direction:row;
-  justify-content:space-around;
+  justify-content:space-evenly;
   text-align: center;
   background: white;
   color: black;
   border-radius: 20px;
-  
+  width: 40%;
+  margin-left: 30%;
+  -webkit-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+  -moz-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+}
+
+.listCreate {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around;
 }
 
 .level li:nth-of-type(2) {
@@ -140,23 +161,72 @@ a {
   cursor: pointer
 }
 
+.listMessage {
+  text-align: center;
+  margin-top: 15px;
+}
+
 @media screen and (max-width: 1200px) {
    h1 {
        font-size: 1.5rem;
-   }
-   
+   } 
 }
 
 @media screen and (max-width: 1000px) {
   .inner_container {
       width: 50%;
   } 
+  .list {
+    width: 50%;
+    margin-left: 25%;
+  }
 }
 
 @media screen and (max-width: 700px) {
   .inner_container {
       width: 60%;
   } 
+  input[type=submit] {
+    font-size: .65rem;
+  }
+}
+
+@media screen and (max-width: 505px) {
+  .list {
+    width: 60%;
+    margin-left: 19%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .list {
+    width: 75%;
+    margin-left: 12%;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .list {
+    width: 90%;
+    margin-left: 6%;
+  }
+  input[type=submit] {
+    font-size: .5rem;
+  }
+}
+
+@media screen and (max-width: 285px) {
+  .list {
+    width: 95%;
+    margin-left: 3%;
+  }
+}
+
+@media screen and (max-width: 262px) {
+  .list {
+    width: 100%;
+    margin-left: 3%;
+  }
 }
 
 @media screen and (max-width: 450px) {
@@ -171,34 +241,89 @@ a {
   } 
 }
 @media screen and (max-width: 750px) {
+  h1 {
+    font-size: .9rem;
+  }
   ul {
       font-size: .5rem;
+  }
+  ol {
+    font-size: .5rem;
+  }
+  p {
+    font-size: .70rem;
   }
   .levelRendered {
     font-size: 1rem;
     line-height: 14px;
   }
-
   .levelRendered2 {
     font-size: 1rem;
-    line-height: 19px;
+    line-height: 20px;
   }
-  
   .dateRendered {
     font-size: .75rem;
+    line-height: 15px;
   }
-  
   .timeRendered {
     font-size: .5rem;;
   }
-  
   .delete {
     font-size: .5rem;
   }
-
   .level li:nth-of-type(2) {
     font-size: .5rem;
   }
-  
+  .levelRendered2 li:nth-of-type(2) {
+    font-size: .5rem;
+  }
+  .outer_container {
+    line-height: 13px;;
+  }
 }
 
+@media screen and  (max-height: 750px) {
+  .main {
+        overflow-y: auto;
+        position: relative;
+  }
+  .outer_container {
+    line-height: 15px;;
+  }
+}
+  
+@media screen and  (max-height: 750px) {  
+  .outer_container {
+    line-height: 17px;
+  }
+}
+
+@media screen and  (max-height: 550px) {  
+  .outer_container {
+    line-height: 20px;
+  }
+}
+
+@media screen and  (max-height: 450px) {  
+  .outer_container {
+    line-height: 23px;
+  }
+}
+
+@media screen and  (max-height: 350px) {  
+  .outer_container {
+    line-height: 26px;
+  }
+}
+
+@media screen and  (max-height: 260px) {  
+  .outer_container {
+    line-height: 30px;
+  }
+}
+
+@media screen and  (max-height: 140px) {  
+  .outer_container {
+    line-height: 33px;
+  }
+}

@@ -98,12 +98,12 @@ class CreateUser extends Component {
             <div>
                 <div className = "info">
                 <h1>How It Works</h1>
-                    <p>This is an app to help you track your blood sugar levels.</p>
-                    <div className = "list">
+                    <p>Track your blood sugar levels.</p><br /><br /><br />
+                    <div style={{textAlign: 'left'}} className = "listCreate">
                         <ol>
                             <li>Create a profile</li>
                             <li>Login</li>
-                            <li>Enter your blood sugar level in the box and click submit.</li>
+                            <li>Enter your blood sugar level and click submit.</li>
                             <li>Your reading will be saved.</li>
                             <li>Repeat whenever you are required to take a reading.</li>
                         </ol>
@@ -113,11 +113,11 @@ class CreateUser extends Component {
                     <div className = "inner_container">    
                         <p>Profile</p>
                         <form onSubmit={this.onSubmit}>
-                            <input className = "firstname" type = "text" name = "firstname" placeholder = "first name" onChange={this.onChangeFirstname} />
-                            <input className = "lastname" type = "text" name = "lastname" placeholder = "last name" onChange={this.onChangeLastname} />
-                            <input className = "email" type = "text" name = "email" placeholder = "email" onChange={this.onChangeEmail} />
+                            <input className = "firstname" type = "text" name = "firstname" placeholder = "first name" onChange={this.onChangeFirstname} style={{textAlign: 'left'}}/>
+                            <input className = "lastname" type = "text" name = "lastname" placeholder = "last name" onChange={this.onChangeLastname} style={{textAlign: 'left'}}/>
+                            <input className = "email" type = "text" name = "email" placeholder = "email" onChange={this.onChangeEmail} style={{textAlign: 'left'}}/>
                             <input className = "pword1" type = "password" name = "password1" placeholder = "password" onChange={this.onChangePassword1} />
-                            <input className = "pword2" type = "password" name = "password2" placeholder = "verify password" onChange={this.onChangePassword2} />
+                            <input className = "pword2" type = "password" name = "password2" placeholder = "password" onChange={this.onChangePassword2} />
                             <input type = "submit" value = "Create" />
                          </form>
                     </div>

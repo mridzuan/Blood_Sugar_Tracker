@@ -13,7 +13,8 @@ import moment from "moment";
             firstname: '',
             readings: [],
             message: '',
-            id: ''
+            id: '',
+            listMessage: ''
         }
     }
 
@@ -32,6 +33,13 @@ import moment from "moment";
                 const sortedBloodSugarArray = currentUser[0].bloodSugar.sort((a,b) =>
                     new Date(a.date) - new Date(b.date)  
                 )
+                
+                //If no readings are available, display a message.
+                if (sortedBloodSugarArray.length === 0) {
+                    this.setState({
+                        listMessage: "Your readings will display here"
+                    })
+                }
 
                 this.setState({
                     firstname: user.name,
@@ -74,23 +82,19 @@ import moment from "moment";
         return readingCategory
     }
 
-    //Need to reduce font-size on smaller screens...
     //Color of category based on level.
     categoryStyle(lev) {
         if (lev > 140) {
             return {
                 color: 'red',
-                fontSize: '.85rem'
             }
         } else if (lev < 70) {
             return {
                 color: 'blue',
-                fontSize: '.85rem'
             }
         } else {
             return {
                 color: 'green',
-                fontSize: '.85rem'
             }
         }
     }
@@ -107,7 +111,7 @@ import moment from "moment";
 
     renderDates() {
         return (
-            this.state.readings.map((el, j, k) => 
+            this.state.readings.map((el, j, k, l) => 
             <div className = "dateAndTime">
                 <div className = "dateRendered">
                     <li key={j}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(0, 13)}</li>
@@ -116,7 +120,7 @@ import moment from "moment";
                     <li key={k}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(13, 20)}</li>
                 </div>
                 <div className = "delete">
-                    <li key={k} className = "delete" value={el._id} onClick={()=> this.deleteItem(el._id)}><u>delete</u>&emsp;</li><br /> <br /> <br /> 
+                    <li key={l} className = "delete" value={el._id} onClick={()=> this.deleteItem(el._id)}><u>delete</u>&emsp;</li><br /> <br /> <br /> 
                 </div>
             </div>
         ))
@@ -144,6 +148,22 @@ import moment from "moment";
         this.props.logoutUser();
     }
 
+    listStyle(item) {
+        if (item === "Your readings will display here") {
+            return {
+                justifyContent: 'center'
+            }
+        }
+    }
+
+    recentStyle(item) {
+        if (item === "Your readings will display here") {
+            return {
+                visibility: 'hidden'
+            }
+        }
+    }
+
     render() {
         return (
             <div>
@@ -155,16 +175,18 @@ import moment from "moment";
                 </div>
                 <div className = "info">
                     <h1>Welcome {this.state.firstname.charAt(0).toUpperCase() + this.state.firstname.substring(1)}</h1>
-                    <p>Here is your full history of readings.</p>
-                        <div className = "list">
+                    <p style = {this.recentStyle(this.state.listMessage)}>Here is your full history of readings.</p>
+                        <div className = "list" style = {this.listStyle(this.state.listMessage)}>
                             <ul>
                                 {this.renderDates()}
                             </ul>
+                            <div className="listMessage">
+                                {this.state.listMessage}
+                            </div><br /><br /><br /><br /><br />
                             <ul>
                                 {this.renderList()} 
                             </ul>
                         </div>
-                    <p>Your average blood sugar level is: {this.averageReading()}</p>
                     <p>{this.renderMessage()}</p>   
                  </div>
             </div>

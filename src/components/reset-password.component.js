@@ -93,8 +93,8 @@ export default class ResetPassword extends Component {
                         <p>Password Reset</p>
                         <form onSubmit={this.onSubmit}>
                             <input className = "pword1" type = "password" name = "password1" placeholder = "password" onChange={this.onChangePassword1} />
-                            <input className = "pword2" type = "password" name = "password2" placeholder = "verify password" onChange={this.onChangePassword2} />
-                            <input type = "submit" value = "Create" />
+                            <input className = "pword2" type = "password" name = "password2" placeholder = "password" onChange={this.onChangePassword2} />
+                            <input type = "submit" value = "Reset" />
                          </form>
                     </div>
                     <p>{this.renderMessage()}</p>
