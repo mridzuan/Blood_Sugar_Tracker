@@ -37,6 +37,17 @@ app.use('/forgotpassword', forgotpasswordRouter)
 app.use('/resetpassword', resetpasswordRouter)
 app.use('/updatepasswordviaemail', updatepasswordviaemailRouter)
 
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+    );
+    next();
+    });
+    app.options('https://dry-savannah-15034.herokuapp.com', cors());
+
 
 if (process.env.NODE_ENV === 'production') {
     //Set static folder
