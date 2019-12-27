@@ -21,7 +21,7 @@ import moment from "moment";
     componentDidMount() {
         const { user } = this.props.auth;
 
-        axios.get('https://dry-savannah-15034.herokuapp.com/bloodsugar')
+        axios.get('http://localhost:5000/bloodsugar')
             .then(response => {
                 //Match the current user with user in database
                 const currentUser = response.data.filter((x) => 
@@ -52,7 +52,7 @@ import moment from "moment";
     }
     
    deleteItem (id) {
-        const url = `https://dry-savannah-15034.herokuapp.com/bloodsugar/${this.state.id}/${id}`
+        const url = `http://localhost:5000/bloodsugar/${this.state.id}/${id}`
         axios.delete(url)
             .then(res => {
                 this.setState({

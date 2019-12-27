@@ -32,7 +32,7 @@ export default class EntryPage extends Component {
                 message: "Please enter your email address."
             })
         } else {
-            axios.post('https://dry-savannah-15034.herokuapp.com/forgotpassword/forgotpassword', {email: this.state.email})
+            axios.post('http://localhost:5000/forgotpassword/forgotpassword', {email: this.state.email})
                 .then(res => {
                     this.setState({
                         message: res.data
