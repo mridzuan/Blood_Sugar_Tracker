@@ -8,7 +8,6 @@ const keys = require("../config/keys");
 router.route('/login').post((req, res) => {
     const { email } = req.body
     const { password } = req.body
-    
     const emailValidate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
     if (emailValidate.test(email)) {

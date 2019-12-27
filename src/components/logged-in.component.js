@@ -226,7 +226,7 @@ import moment from "moment";
                         </div>
                 </div>
                 <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-                    <p>Your average blood sugar level is: <span style = {this.categoryStyle(this.averageReading())}>{this.averageReading()}</span></p>
+                    <p style = {this.recentStyle(this.state.listMessage)}>Your average blood sugar level is: <span style = {this.categoryStyle(this.averageReading())}>{this.averageReading()}</span></p>
                     <p>See your <a href="/fullhistory">full history</a>.</p><br />
                     <div className = "inner_container">
                             <p>New Reading</p>
@@ -239,6 +239,7 @@ import moment from "moment";
                                         <DatePicker
                                         selected={this.state.date}
                                         onChange={this.onChangeDate}
+                                        showTimeSelect
                                         />
                                     </div>
                                 </div>

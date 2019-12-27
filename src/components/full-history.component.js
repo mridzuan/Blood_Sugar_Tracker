@@ -18,7 +18,6 @@ import moment from "moment";
         }
     }
 
-
     componentDidMount() {
         const { user } = this.props.auth;
 
@@ -52,7 +51,6 @@ import moment from "moment";
             })
     }
     
-
    deleteItem (id) {
         const url = `http://localhost:5000/bloodsugar/${this.state.id}/${id}`
         axios.delete(url)

@@ -41,7 +41,6 @@ router.route('/forgotpassword').post((req, res) => {
                 + `If you did not make this request, disregard this email.\n`
             }
 
-
            transporter.sendMail(mailMessage, (err, res) => {
                 if (err) {
                     console.error('there was an error: ', err)
@@ -51,7 +50,6 @@ router.route('/forgotpassword').post((req, res) => {
         }
     })
 })
-
 
 
 module.exports = router

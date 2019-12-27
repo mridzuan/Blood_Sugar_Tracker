@@ -8,7 +8,6 @@ router.route('/').get((req, res) => {
 })
 
 router.route('/add').post((req, res) => {
-    //const { firstname } = req.body
     const { id } = req.body
     const { level } = req.body
     const date = Date.parse(req.body.date)
@@ -32,19 +31,17 @@ router.route('/add').post((req, res) => {
               )
               result.bloodSugar.push(newReading)
               result.save()
-              .then(() => res.json('Reading added!'))
-              .catch(err => res.status(400).json('Error: ' + err))
+                .then(() => res.json('Reading added!'))
+                .catch(err => res.status(400).json('Error: ' + err))
           }
     })
 })
-
 
 router.route('/:id1/:id2').delete((req, res) => {
     User.updateOne({_id: req.params.id1}, {$pull: {bloodSugar: {_id: req.params.id2}}})
         .then(() => res.json('Reading deleted!'))
         .catch(err => res.status(400).json('Error: ' + err))
 })
-
 
 
 module.exports = router

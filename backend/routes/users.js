@@ -9,10 +9,8 @@ router.route('/add').post((req, res) => {
     const { email } = req.body
     const password1  = req.body.password1
     const password2 = req.body.password2
-
     const emailValidate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     const nameCheck = /^[a-zA-Z ]+$/
-
 
     if (nameCheck.test(firstname)) {
         if (nameCheck.test(lastname)) {
@@ -47,11 +45,9 @@ router.route('/add').post((req, res) => {
                                     newUser.save()
                                         .then(() => res.json('User added! Redirecting you to login page!'))
                                         .catch(err => res.status(400).json('Error: ' + err))
-                                    }
-                                    
+                                    }  
                                 })
-                            }
-                            
+                            }  
                         })
                     }
                     })

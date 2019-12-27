@@ -78,12 +78,10 @@ class CreateUser extends Component {
                     this.setState({
                         message: res.data
                     })
-                    
                     if (this.state.message === "User added! Redirecting you to login page!") {
                         setTimeout(function(){
                             window.location = '/login';
-                         }, 1000);
-                         
+                         }, 1000);    
                     }
                 })   
     }
@@ -97,19 +95,19 @@ class CreateUser extends Component {
         return (
             <div>
                 <div className = "info">
-                <h1>How It Works</h1>
-                    <p>Track your blood sugar levels.</p><br /><br /><br />
+                <h1>Sign Up</h1>
+                    <p>Start tracking your blood sugar levels</p><br /><br /><br />
                     <div style={{textAlign: 'left'}} className = "listCreate">
                         <ol>
-                            <li>Create a profile</li>
-                            <li>Login</li>
-                            <li>Enter your blood sugar level and click submit.</li>
-                            <li>Your reading will be saved.</li>
+                            <li>Create a profile.</li><br />
+                            <li>Log in.</li><br />
+                            <li>Enter your blood sugar level and click submit.</li><br />
+                            <li>Your reading will be saved.</li><br />
                             <li>Repeat whenever you are required to take a reading.</li>
                         </ol>
                     </div>
                 </div>
-                <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br />
+                <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br />
                     <div className = "inner_container">    
                         <p>Profile</p>
                         <form onSubmit={this.onSubmit}>

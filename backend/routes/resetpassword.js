@@ -1,7 +1,7 @@
 const router = require('express').Router()
 let User = require('../models/user.model')
 
-//Need to figure out why expiration is not saving.
+
 router.route('/reset').get((req, res) => {
     User.findOne({
             resetPasswordToken: req.query.resetPasswordToken,

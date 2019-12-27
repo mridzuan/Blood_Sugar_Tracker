@@ -64,13 +64,11 @@ class Login extends Component {
                         } else {
                             this.props.loginUser(userData);
                         }
-                        
                     } else {
                         this.setState({
                             message: "No response from server."
                         })
-                    }
-                    
+                    }  
                 })
     }
 
