@@ -73,7 +73,7 @@ class CreateUser extends Component {
                 password2: this.state.password2
             }
     
-            axios.post('/users/add', user)
+            axios.post('https://dry-savannah-15034.herokuapp.com/users/add', user)
                 .then((res) => {
                     this.setState({
                         message: res.data

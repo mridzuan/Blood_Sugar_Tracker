@@ -33,7 +33,7 @@ import moment from "moment";
     componentDidMount() {
         const { user } = this.props.auth;
  
-        axios.get('/bloodsugar')
+        axios.get('https://dry-savannah-15034.herokuapp.com/bloodsugar')
             .then(response => {
                 //Match the current user with user in database
                 const currentUser = response.data.filter((x) => 
@@ -166,7 +166,7 @@ import moment from "moment";
              date: this.state.date
          }
  
-         axios.post('http://localhost:5000/bloodsugar/add', reading)
+         axios.post('https://dry-savannah-15034.herokuapp.com/bloodsugar/add', reading)
          .then((res) => {
              this.setState({
                  message: res.data

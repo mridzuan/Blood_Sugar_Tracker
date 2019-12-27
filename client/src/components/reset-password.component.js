@@ -68,7 +68,7 @@ export default class ResetPassword extends Component {
             password2: this.state.password2
         }
        
-        axios.post('/updatePasswordViaEmail/updatePasswordViaEmail', user)
+        axios.post('https://dry-savannah-15034.herokuapp.com/updatePasswordViaEmail/updatePasswordViaEmail', user)
             .then ((res) => {
                 this.setState({
                     message: res.data
