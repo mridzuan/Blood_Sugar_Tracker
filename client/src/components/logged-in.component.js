@@ -237,7 +237,7 @@ import moment from "moment";
                                 <input type = "submit" value = "Submit"/>
                                 <div className="dateform">
                                     <label>Date: </label>
-                                    <div >
+                                    <div className="datepicker">
                                         <DatePicker
                                         selected={this.state.date}
                                         onChange={this.onChangeDate}

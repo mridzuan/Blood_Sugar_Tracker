@@ -68,7 +68,7 @@ class CreateUser extends Component {
             const user = {
                 firstname: this.state.firstname,
                 lastname: this.state.lastname,
-                email: this.state.email,
+                email: this.state.email.toLowerCase(),
                 password1: this.state.password1,
                 password2: this.state.password2
             }
