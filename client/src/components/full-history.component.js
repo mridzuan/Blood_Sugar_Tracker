@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "./actions/authActions";
 import moment from "moment";
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
  class FullHistory extends Component {
     constructor(props) {
@@ -14,7 +16,7 @@ import moment from "moment";
             readings: [],
             message: '',
             id: '',
-            listMessage: ''
+            listMessage: '',
         }
     }
 
@@ -51,9 +53,32 @@ import moment from "moment";
                 console.log(error)
             })
     }
+
+    alertBox(id) {
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: 'Are you sure you want to delete this reading?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => this.deleteItem(id)
+                },
+                {
+                    label: 'No'
+                  
+                }
+            ],
+            closeOnClickOutside: true,
+            closeOnEscape: true,
+            willUnmount: () => {},
+            onClickOutside: () => {},
+            onKeypressEscape: () => {}
+        })
+    }
     
    deleteItem (id) {
-        //const url = `http://localhost:5000/bloodsugar/${this.state.id}/${id}`
+    /*if (window.confirm("Are you sure you wish to delete this reading?")) {
+            //const url = `http://localhost:5000/bloodsugar/${this.state.id}/${id}`*/
         const url = `/bloodsugar/${this.state.id}/${id}`
         axios.delete(url)
             .then(res => {
@@ -65,7 +90,8 @@ import moment from "moment";
                         window.location.reload()
                      }, 1000);     
                 }
-            })
+            }) 
+       //}        
     }
 
     //Category based on level.
@@ -110,6 +136,7 @@ import moment from "moment";
     }
 
     renderDates() {
+        console.log(this.state.readings)
         return (
             this.state.readings.map((el, j, k, l) => 
             <div className = "dateAndTime">
@@ -120,7 +147,7 @@ import moment from "moment";
                     <li key={k}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(13, 20)}</li>
                 </div>
                 <div className = "delete">
-                    <li key={l} className = "delete" value={el._id} onClick={()=> this.deleteItem(el._id)}><u>delete</u>&emsp;</li><br />
+                    <li key={l} className = "delete" value={el._id} onClick={()=> this.alertBox(el._id)}><u>delete</u>&emsp;</li><br />
                 </div>
             </div>
         ))
@@ -186,9 +213,9 @@ import moment from "moment";
                             <ul>
                                 {this.renderList()} 
                             </ul>
-                        </div>   
+                        </div> 
+                    <p>{this.renderMessage()}</p>   
                  </div>
-                 <div className = "deleteMessage"><p>{this.renderMessage()}</p></div>
             </div>
         )
     }
