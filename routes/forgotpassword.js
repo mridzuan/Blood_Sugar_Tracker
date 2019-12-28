@@ -37,7 +37,7 @@ router.route('/forgotpassword').post((req, res) => {
                 text:
                 `You are receiving this email because there has been a request to reset your password.\n`
                 + `Please click on the following link or paste it in your browser within one hour: \n`
-                + `http://localhost:3000/resetpassword/reset/${token} \n\n`
+                + `https://dry-savannah-15034.herokuapp.com/resetpassword/reset/${token} \n\n`
                 + `If you did not make this request, disregard this email.\n`
             }
 
