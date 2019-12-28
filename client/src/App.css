@@ -347,12 +347,12 @@ a {
   }
   .levelRendered {
     font-size: 1rem;
-    line-height: 90%;
+    line-height: 100%;
     
   }
   .levelRendered2 {
     font-size: 1rem;
-    line-height: 110%
+    line-height: 120%
   }
   .dateRendered {
     font-size: .75rem;
