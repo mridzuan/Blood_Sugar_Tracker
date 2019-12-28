@@ -7,6 +7,8 @@ const passport = require('passport')
 const app = express()
 const path = require('path')
 
+require('./routes')(app); //these are your api routes
+
 app.use(cors())
 app.use(express.json())
 app.use(passport.initialize())
@@ -38,7 +40,7 @@ app.use('/resetpassword', resetpasswordRouter)
 app.use('/updatepasswordviaemail', updatepasswordviaemailRouter)
 
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
     //Set static folder
     app.use(express.static('client/build'));
 
