@@ -21,7 +21,8 @@ import moment from "moment";
     componentDidMount() {
         const { user } = this.props.auth;
 
-        axios.get('http://localhost:5000/bloodsugar')
+       // axios.get('http://localhost:5000/bloodsugar')
+        axios.get('/bloodsugar')
             .then(response => {
                 //Match the current user with user in database
                 const currentUser = response.data.filter((x) => 
@@ -52,7 +53,8 @@ import moment from "moment";
     }
     
    deleteItem (id) {
-        const url = `http://localhost:5000/bloodsugar/${this.state.id}/${id}`
+        //const url = `http://localhost:5000/bloodsugar/${this.state.id}/${id}`
+        const url = `/bloodsugar/${this.state.id}/${id}`
         axios.delete(url)
             .then(res => {
                 this.setState({

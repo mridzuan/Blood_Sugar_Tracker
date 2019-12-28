@@ -22,7 +22,8 @@ export default class ResetPassword extends Component {
     componentDidMount() {
         const resetToken = (window.location.pathname).slice(21)
  
-        axios.get('http://localhost:5000/resetpassword/reset/', {
+        //axios.get('http://localhost:5000/resetpassword/reset/', {
+        axios.get('/resetpassword/reset/', {
                 params: {
                     resetPasswordToken: resetToken
                 }
@@ -68,7 +69,8 @@ export default class ResetPassword extends Component {
             password2: this.state.password2
         }
        
-        axios.post('http://localhost:5000/updatePasswordViaEmail/updatePasswordViaEmail', user)
+        //axios.post('http://localhost:5000/updatePasswordViaEmail/updatePasswordViaEmail', user)
+        axios.post('/updatePasswordViaEmail/updatePasswordViaEmail', user)
             .then ((res) => {
                 this.setState({
                     message: res.data

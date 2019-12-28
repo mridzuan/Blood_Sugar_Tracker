@@ -73,7 +73,8 @@ class CreateUser extends Component {
                 password2: this.state.password2
             }
     
-            axios.post('http://localhost:5000/users/add', user)
+            //axios.post('http://localhost:5000/users/add', user)
+            axios.post('/users/add', user)
                 .then((res) => {
                     this.setState({
                         message: res.data

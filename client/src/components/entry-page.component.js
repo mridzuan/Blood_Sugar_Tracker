@@ -54,7 +54,8 @@ class Login extends Component {
             password: this.state.password
           };
     
-           axios.post('http://localhost:5000/login/login', userData)
+           //axios.post('http://localhost:5000/login/login', userData)
+           axios.post('/login/login', userData)
                 .then(res => {
                     if (res) {
                         if (res.data.success !== true) {

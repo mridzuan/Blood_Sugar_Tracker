@@ -33,7 +33,8 @@ import moment from "moment";
     componentDidMount() {
         const { user } = this.props.auth;
  
-        axios.get('http://localhost:5000/bloodsugar')
+        //axios.get('http://localhost:5000/bloodsugar')
+        axios.get('/bloodsugar')
             .then(response => {
                 //Match the current user with user in database
                 const currentUser = response.data.filter((x) => 
@@ -167,6 +168,7 @@ import moment from "moment";
          }
  
          axios.post('http://localhost:5000/bloodsugar/add', reading)
+         axios.post('/bloodsugar/add', reading)
          .then((res) => {
              this.setState({
                  message: res.data
