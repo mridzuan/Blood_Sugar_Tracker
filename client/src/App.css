@@ -95,12 +95,15 @@ ul {
 
 .levelRendered {
   font-size: 1.2rem;
-  line-height: 20px;
+  line-height: 1.25rem;
 }
 
+.dateAndTime {
+  line-height: 1.25rem;
+}
 .levelRendered2 {
   font-size: 1.2rem;
-  line-height: 1.5rem;
+  line-height: 1.25rem;
 }
 
 .levelRendered2 li:nth-of-type(2) {
@@ -347,12 +350,12 @@ a {
   }
   .levelRendered {
     font-size: 1rem;
-    line-height: 100%;
+    line-height: 125%;
     
   }
   .levelRendered2 {
     font-size: 1rem;
-    line-height: 120%
+    line-height: 130%
   }
   .dateRendered {
     font-size: .75rem;
@@ -370,9 +373,9 @@ a {
   .levelRendered2 li:nth-of-type(2) {
     font-size: .5rem;
   }
-  /*.outer_container {
+  .outer_container_list {
     line-height: 13px;;
-  }*/
+  }
 }
 
 /*@media screen and  (max-height: 750px) {

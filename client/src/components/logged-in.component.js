@@ -134,7 +134,7 @@ import moment from "moment";
                     <li key={j}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(0, 13)}</li>
                 </div>
                 <div className = "timeRendered">
-                    <li key={k}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(13, 20)}</li><br /><br /> 
+                    <li key={k}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(13, 20)}</li><br />
                 </div>
             </div>
         ))

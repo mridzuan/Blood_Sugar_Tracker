@@ -104,7 +104,7 @@ import moment from "moment";
             this.state.readings.map((el, h, i, g) =>
             <div className = "levelRendered2" >
                 <li key={h}>{el.level}</li>
-                <li key={i} style = {this.categoryStyle(el.level)}>{this.renderCategory(el.level)}</li><br />
+                <li key={i} style = {this.categoryStyle(el.level)}>{this.renderCategory(el.level)}</li><br /><br />
             </div>
         ))    
     }
@@ -120,7 +120,7 @@ import moment from "moment";
                     <li key={k}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(13, 20)}</li>
                 </div>
                 <div className = "delete">
-                    <li key={l} className = "delete" value={el._id} onClick={()=> this.deleteItem(el._id)}><u>delete</u>&emsp;</li><br /><br />
+                    <li key={l} className = "delete" value={el._id} onClick={()=> this.deleteItem(el._id)}><u>delete</u>&emsp;</li><br />
                 </div>
             </div>
         ))
