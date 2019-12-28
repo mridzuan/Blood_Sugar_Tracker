@@ -7,8 +7,6 @@ const passport = require('passport')
 const app = express()
 const path = require('path')
 
-require('./routes')(app); //these are your api routes
-
 app.use(cors())
 app.use(express.json())
 app.use(passport.initialize())
