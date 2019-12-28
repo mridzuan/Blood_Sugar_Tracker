@@ -24,11 +24,11 @@ p {
 }
 
 .outer_container {
-  position: absolute;
+  position: static;
   top: 50%;
   margin-top: -200px;
   /* half of #content height*/
-  left: 20%;
+  margin-left: 20%;
   width: 60%;
   text-align: center;
 }
@@ -84,13 +84,13 @@ ul {
 }
 
 .levelRendered {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   line-height: 20px;
 }
 
 .levelRendered2 {
-  font-size: 1.5rem;
-  line-height: 28px;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
 }
 
 .levelRendered2 li:nth-of-type(2) {
@@ -99,7 +99,7 @@ ul {
 
 .dateRendered {
   font-size: 1rem;
-  line-height: 18px;
+  /*line-height: 18px;*/
 }
 
 .timeRendered {
@@ -120,7 +120,7 @@ ul {
 }
 
 a {
-  color: black;
+  color: white;
 }
 
 .list {
@@ -337,15 +337,16 @@ a {
   }
   .levelRendered {
     font-size: 1rem;
-    line-height: 14px;
+    line-height: 90%;
+    
   }
   .levelRendered2 {
     font-size: 1rem;
-    line-height: 20px;
+    line-height: 110%
   }
   .dateRendered {
     font-size: .75rem;
-    line-height: 15px;
+    /*line-height: 15px;*/
   }
   .timeRendered {
     font-size: .5rem;;
@@ -359,12 +360,12 @@ a {
   .levelRendered2 li:nth-of-type(2) {
     font-size: .5rem;
   }
-  .outer_container {
+  /*.outer_container {
     line-height: 13px;;
-  }
+  }*/
 }
 
-@media screen and  (max-height: 750px) {
+/*@media screen and  (max-height: 750px) {
   .main {
         overflow-y: auto;
         position: relative;
@@ -376,36 +377,36 @@ a {
   
 @media screen and  (max-height: 750px) {  
   .outer_container {
-    line-height: 17px;
+    line-height: 20px;
   }
 }
 
 @media screen and  (max-height: 550px) {  
   .outer_container {
-    line-height: 20px;
+    line-height: 25px;
   }
 }
 
 @media screen and  (max-height: 450px) {  
   .outer_container {
-    line-height: 23px;
+    line-height: 228px;
   }
 }
 
 @media screen and  (max-height: 350px) {  
   .outer_container {
-    line-height: 26px;
+    line-height: 30px;
   }
 }
 
 @media screen and  (max-height: 260px) {  
   .outer_container {
-    line-height: 30px;
+    line-height: 35px;
   }
 }
 
 @media screen and  (max-height: 140px) {  
   .outer_container {
-    line-height: 33px;
+    line-height: 40px;
   }
-}
+}*/
