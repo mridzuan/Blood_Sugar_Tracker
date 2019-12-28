@@ -167,7 +167,7 @@ import moment from "moment";
              date: this.state.date
          }
  
-         axios.post('http://localhost:5000/bloodsugar/add', reading)
+        // axios.post('http://localhost:5000/bloodsugar/add', reading)
          axios.post('/bloodsugar/add', reading)
          .then((res) => {
              this.setState({
