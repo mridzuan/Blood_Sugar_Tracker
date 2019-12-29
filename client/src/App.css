@@ -139,7 +139,7 @@ a {
 .list {
   display:flex; 
   flex-direction:row;
-  justify-content:space-around;
+  justify-content:space-between;
   text-align: center;
   background: white;
   color: black;
@@ -154,7 +154,7 @@ a {
 @supports (-ms-accelerator: true) {
   /* Edge only */
 
-  .space-evenly {
+  .list {
     justify-content: space-around;
   }
 }
