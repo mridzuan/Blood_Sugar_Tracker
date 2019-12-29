@@ -43,7 +43,7 @@ import moment from "moment";
 
                 //Sort the array with readings by date so that values display in order.
                 const sortedBloodSugarArray = currentUser[0].bloodSugar.sort((a,b) =>
-                    new Date(a.date) - new Date(b.date)  
+                    new Date(b.date) - new Date(a.date) 
                 )
 
                 //If no readings are available, display a message.
@@ -58,7 +58,7 @@ import moment from "moment";
                     id: user.id,
                     allReadings: sortedBloodSugarArray,
                     //Set to only display 5 most recent readings
-                    readings: sortedBloodSugarArray.slice(0).slice(-5)
+                    readings: sortedBloodSugarArray.slice(0, 5)
                 })
             })
             .catch((error) => {

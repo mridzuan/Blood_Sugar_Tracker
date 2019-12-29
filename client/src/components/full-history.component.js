@@ -33,7 +33,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
                 //Sort the array with readings by date so that values display in order.
                 const sortedBloodSugarArray = currentUser[0].bloodSugar.sort((a,b) =>
-                    new Date(a.date) - new Date(b.date)  
+                    new Date(b.date)  - new Date(a.date) 
                 )
                 
                 //If no readings are available, display a message.
