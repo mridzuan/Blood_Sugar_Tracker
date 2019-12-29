@@ -56,7 +56,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
     alertBox(id) {
         confirmAlert({
-            title: 'Confirm to submit',
+            title: 'Confirm to delete',
             message: 'Are you sure you want to delete this reading?',
             buttons: [
                 {

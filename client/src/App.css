@@ -139,7 +139,7 @@ a {
 .list {
   display:flex; 
   flex-direction:row;
-  justify-content:space-evenly;
+  justify-content:space-around;
   text-align: center;
   background: white;
   color: black;
