@@ -1,21 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import axios from 'axios'
-import DatePicker from 'react-datepicker';
+import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css"
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { logoutUser } from "./actions/authActions";
-import moment from "moment";
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import { logoutUser } from "./actions/authActions"
+import moment from "moment"
 
 
  class Dashboard extends Component {
     constructor(props) {
-        super(props);
-
-        this.onChangeFirstname = this.onChangeFirstname.bind(this)
-        this.onChangeLevel = this.onChangeLevel.bind(this)
-        this.onChangeDate = this.onChangeDate.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        super(props)
 
         this.state = {
             firstname: '',
@@ -27,13 +22,17 @@ import moment from "moment";
             message: '',
             listMessage: ''
         }
+
+        this.onChangeFirstname = this.onChangeFirstname.bind(this)
+        this.onChangeLevel = this.onChangeLevel.bind(this)
+        this.onChangeDate = this.onChangeDate.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
     }
 
 
     componentDidMount() {
-        const { user } = this.props.auth;
+        const { user } = this.props.auth
  
-        //axios.get('http://localhost:5000/bloodsugar')
         axios.get('/bloodsugar')
             .then(response => {
                 //Match the current user with user in database
@@ -117,24 +116,23 @@ import moment from "moment";
     
     renderList() {
         return (
-            this.state.readings.map((el, h, i) =>
-            <div className = "levelRendered" >
-                <li key={h}>{el.level}</li>
-                <li key={i} style = {this.categoryStyle(el.level)}>{this.renderCategory(el.level)}</li><br />
+            this.state.readings.map((el) =>
+            <div className = "levelRendered" key={el._id} >
+                <li>{el.level}</li>
+                <li style = {this.categoryStyle(el.level)}>{this.renderCategory(el.level)}</li><br />
             </div> 
         ))
     }
     
-
     renderDates() {
         return (
-            this.state.readings.map((el, j, k) => 
-            <div className = "dateAndTime">
+            this.state.readings.map((el) => 
+            <div className = "dateAndTime" key={el._id}>
                 <div className = "dateRendered">
-                    <li key={j}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(0, 13)}</li>
+                    <li>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(0, 13)}</li>
                 </div>
                 <div className = "timeRendered">
-                    <li key={k}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(13, 20)}</li><br />
+                    <li>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(13, 20)}</li><br />
                 </div>
             </div>
         ))
@@ -144,13 +142,13 @@ import moment from "moment";
     averageReading() {
         var total = 0;
         for (var i = 0; i < this.state.allReadings.length; i++) {
-            total += this.state.allReadings[i].level;
+            total += this.state.allReadings[i].level
         }
 
         if (isNaN(Math.round(total / this.state.allReadings.length))) {
             return ""
         } else {
-            return Math.round(total / this.state.allReadings.length);
+            return Math.round(total / this.state.allReadings.length)
         }  
     }
 
@@ -159,7 +157,7 @@ import moment from "moment";
     }
 
     onSubmit(e) {
-        e.preventDefault();
+        e.preventDefault()
  
          const reading = {
              id: this.state.id,
@@ -167,7 +165,6 @@ import moment from "moment";
              date: this.state.date
          }
  
-        // axios.post('http://localhost:5000/bloodsugar/add', reading)
          axios.post('/bloodsugar/add', reading)
          .then((res) => {
              this.setState({
@@ -176,14 +173,14 @@ import moment from "moment";
              if (this.state.message === "Reading added!") {
                  setTimeout(function(){
                      window.location.reload()
-                  }, 1000); 
+                  }, 1000);
              }
          }) 
      }
 
     onLogoutClick = e => {
         e.preventDefault();
-        this.props.logoutUser();
+        this.props.logoutUser()
     }
 
     listStyle(item) {
@@ -233,9 +230,7 @@ import moment from "moment";
                     <div className = "inner_container">
                             <p>New Reading</p>
                             <form onSubmit={this.onSubmit}>
-                                <input className = "newreading" type = "text" name = "newreading" placeholder = "Level" onChange = {this.onChangeLevel} style={{textAlign: 'center'}}/>
-                                <input type = "submit" value = "Submit"/>
-                                <div className="dateform">
+                            <div className="dateform">
                                     <label>Date: </label>
                                     <div className="datepicker">
                                         <DatePicker
@@ -245,6 +240,8 @@ import moment from "moment";
                                         />
                                     </div>
                                 </div>
+                                <input className = "newreading" type = "text" name = "newreading" placeholder = "Level" onChange = {this.onChangeLevel} style={{textAlign: 'center'}}/>
+                                <input type = "submit" value = "Submit"/>
                             </form>
                             <p>{this.renderMessage()}</p>   
                     </div>
@@ -257,11 +254,11 @@ import moment from "moment";
 Dashboard.propTypes = {
     logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
-  };
+  }
   const mapStateToProps = state => ({
     auth: state.auth
-  });
+  })
   export default connect(
     mapStateToProps,
     { logoutUser }
-  )(Dashboard);
+  )(Dashboard)

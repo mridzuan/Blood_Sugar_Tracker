@@ -1,37 +1,36 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { loginUser } from "./actions/authActions";
+import React, { Component } from 'react'
+import axios from 'axios'
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import { loginUser } from "./actions/authActions"
 
 
 class Login extends Component {
     constructor(props) {
-        super(props);
-
-        this.onChangeEmail = this.onChangeEmail.bind(this)
-        this.onChangePassword = this.onChangePassword.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        super(props)
 
         this.state = {
             email: '',
             password: '',
             message: ''
         }
+
+        this.onChangeEmail = this.onChangeEmail.bind(this)
+        this.onChangePassword = this.onChangePassword.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
     }
 
     componentDidMount() {
         // If logged in and user navigates to Login page, should redirect them to dashboard
         if (this.props.auth.isAuthenticated) {
-          this.props.history.push("/loggedin");
+          this.props.history.push("/loggedin")
         }
       }
 
-    //Works when I call componentDidUpdate but I have to click submit twice
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated) {
-        this.props.history.push("/loggedin"); 
-            } 
+    componentDidUpdate() {
+        if (this.props.auth.isAuthenticated) {
+        this.props.history.push("/loggedin")
+        } 
     }
 
     onChangeEmail(e) {
@@ -47,7 +46,7 @@ class Login extends Component {
     }
 
     onSubmit(e) {
-       e.preventDefault();
+       e.preventDefault()
         
        const userData = {
             email: this.state.email.toLowerCase(),
@@ -63,7 +62,7 @@ class Login extends Component {
                                 message: res.data.toString()
                             })
                         } else {
-                            this.props.loginUser(userData);
+                            this.props.loginUser(userData)
                         }
                     } else {
                         this.setState({
@@ -104,14 +103,14 @@ Login.propTypes = {
     loginUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
-  };
+  }
   const mapStateToProps = state => ({
     auth: state.auth,
     errors: state.errors
-  });
+  })
   export default connect(
     mapStateToProps,
     { loginUser }
-  )(Login);
+  )(Login)
 
  

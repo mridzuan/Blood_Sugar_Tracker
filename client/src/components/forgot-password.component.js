@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from 'react'
+import axios from 'axios'
 
 export default class EntryPage extends Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.onChangeEmail = this.onChangeEmail.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
@@ -32,7 +32,6 @@ export default class EntryPage extends Component {
                 message: "Please enter your email address."
             })
         } else {
-           // axios.post('http://localhost:5000/forgotpassword/forgotpassword', {email: this.state.email})
             axios.post('/forgotpassword/forgotpassword', {email: this.state.email})
                 .then(res => {
                     this.setState({

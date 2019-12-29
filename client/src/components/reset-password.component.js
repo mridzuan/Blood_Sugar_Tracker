@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from 'react'
+import axios from 'axios'
 
 
 export default class ResetPassword extends Component {
     constructor(props) {
-        super(props);
-
-        this.onChangePassword1 = this.onChangePassword1.bind(this)
-        this.onChangePassword2 = this.onChangePassword2.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        super(props)
 
         this.state = {
             email: '',
@@ -16,13 +12,15 @@ export default class ResetPassword extends Component {
             password2: '',
             message: ''
         }
-        
+
+        this.onChangePassword1 = this.onChangePassword1.bind(this)
+        this.onChangePassword2 = this.onChangePassword2.bind(this)
+        this.onSubmit = this.onSubmit.bind(this) 
     }
 
     componentDidMount() {
         const resetToken = (window.location.pathname).slice(21)
  
-        //axios.get('http://localhost:5000/resetpassword/reset/', {
         axios.get('/resetpassword/reset/', {
                 params: {
                     resetPasswordToken: resetToken
@@ -69,7 +67,6 @@ export default class ResetPassword extends Component {
             password2: this.state.password2
         }
        
-        //axios.post('http://localhost:5000/updatePasswordViaEmail/updatePasswordViaEmail', user)
         axios.post('/updatePasswordViaEmail/updatePasswordViaEmail', user)
             .then ((res) => {
                 this.setState({
@@ -78,7 +75,7 @@ export default class ResetPassword extends Component {
                 
                 if (this.state.message === "Password updated! Redirecting you to login page!") {
                     setTimeout(function(){
-                        window.location = '/login';
+                        window.location = '/login'
                      }, 1000);
                 }
             })

@@ -2,7 +2,7 @@ const router = require('express').Router()
 const User = require('../models/user.model')
 const bcrypt = require('bcrypt')
 
-const BCRYPT_SALT_ROUNDS = 12;
+const BCRYPT_SALT_ROUNDS = 12
 
 router.route('/updatepasswordviaemail').post((req, res) => {
     User.findOne({email: req.body.email}, (err, result) => {

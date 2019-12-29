@@ -1,19 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import axios from 'axios'
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 
 
 class CreateUser extends Component {
     constructor(props) {
-        super(props);
-
-        this.onChangeFirstname = this.onChangeFirstname.bind(this)
-        this.onChangeLastname = this.onChangeLastname.bind(this)
-        this.onChangeEmail = this.onChangeEmail.bind(this)
-        this.onChangePassword1 = this.onChangePassword1.bind(this)
-        this.onChangePassword2 = this.onChangePassword2.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        super(props)
 
         this.state = {
             firstname: '',
@@ -23,12 +16,19 @@ class CreateUser extends Component {
             password2: '',
             message: ''
         }
+
+        this.onChangeFirstname = this.onChangeFirstname.bind(this)
+        this.onChangeLastname = this.onChangeLastname.bind(this)
+        this.onChangeEmail = this.onChangeEmail.bind(this)
+        this.onChangePassword1 = this.onChangePassword1.bind(this)
+        this.onChangePassword2 = this.onChangePassword2.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
     }
 
     componentDidMount() {
         // If logged in and user navigates to Register page, should redirect them to dashboard
         if (this.props.auth.isAuthenticated) {
-          this.props.history.push("/loggedin");
+          this.props.history.push("/loggedin")
         }
       }
 
@@ -63,7 +63,7 @@ class CreateUser extends Component {
     }
 
     onSubmit(e) {
-        e.preventDefault();
+        e.preventDefault()
 
             const user = {
                 firstname: this.state.firstname,
@@ -73,7 +73,6 @@ class CreateUser extends Component {
                 password2: this.state.password2
             }
     
-            //axios.post('http://localhost:5000/users/add', user)
             axios.post('/users/add', user)
                 .then((res) => {
                     this.setState({
@@ -81,7 +80,7 @@ class CreateUser extends Component {
                     })
                     if (this.state.message === "User added! Redirecting you to login page!") {
                         setTimeout(function(){
-                            window.location = '/login';
+                            window.location = '/login'
                          }, 1000);    
                     }
                 })   
@@ -108,7 +107,7 @@ class CreateUser extends Component {
                         </ol>
                     </div>
                 </div>
-                <div className = "outer_container"><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <div className = "outer_container_create"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                     <div className = "inner_container">    
                         <p>Profile</p>
                         <form onSubmit={this.onSubmit}>
@@ -129,10 +128,10 @@ class CreateUser extends Component {
 
 CreateUser.propTypes = {
     auth: PropTypes.object.isRequired
-  };
+  }
   const mapStateToProps = state => ({
     auth: state.auth
-  });
+  })
   export default connect(
     mapStateToProps
-  )(CreateUser);
+  )(CreateUser)

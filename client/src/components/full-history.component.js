@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import axios from 'axios'
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { logoutUser } from "./actions/authActions";
-import moment from "moment";
-import { confirmAlert } from 'react-confirm-alert'; 
-import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import { logoutUser } from "./actions/authActions"
+import moment from "moment"
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
  class FullHistory extends Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             firstname: '',
@@ -21,9 +21,8 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
     }
 
     componentDidMount() {
-        const { user } = this.props.auth;
+        const { user } = this.props.auth
 
-       // axios.get('http://localhost:5000/bloodsugar')
         axios.get('/bloodsugar')
             .then(response => {
                 //Match the current user with user in database
@@ -42,7 +41,6 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
                         listMessage: "Your readings will display here"
                     })
                 }
-
                 this.setState({
                     firstname: user.name,
                     id: user.id,
@@ -77,8 +75,6 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
     }
     
    deleteItem (id) {
-    /*if (window.confirm("Are you sure you wish to delete this reading?")) {
-            //const url = `http://localhost:5000/bloodsugar/${this.state.id}/${id}`*/
         const url = `/bloodsugar/${this.state.id}/${id}`
         axios.delete(url)
             .then(res => {
@@ -88,10 +84,9 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
                 if (this.state.message === "Reading deleted!") {
                     setTimeout(function(){
                         window.location.reload()
-                     }, 1000);     
+                     }, 1000)   
                 }
-            }) 
-       //}        
+            })        
     }
 
     //Category based on level.
@@ -104,7 +99,6 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
         } else {
             readingCategory = "Normal"
         }
-
         return readingCategory
     }
 
@@ -127,33 +121,31 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
     renderList() {
         return (
-            this.state.readings.map((el, h, i, g) =>
-            <div className = "levelRendered2" >
-                <li key={h}>{el.level}</li>
-                <li key={i} style = {this.categoryStyle(el.level)}>{this.renderCategory(el.level)}</li><br /><br />
+            this.state.readings.map((el) =>
+            <div className = "levelRendered2" key={el._id}>
+                <li>{el.level}</li>
+                <li style = {this.categoryStyle(el.level)}>{this.renderCategory(el.level)}</li><br /><br />
             </div>
         ))    
     }
 
     renderDates() {
-        console.log(this.state.readings)
         return (
-            this.state.readings.map((el, j, k, l) => 
-            <div className = "dateAndTime">
+            this.state.readings.map((el) => 
+            <div className = "dateAndTime" key={el._id}>
                 <div className = "dateRendered">
-                    <li key={j}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(0, 13)}</li>
+                    <li>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(0, 13)}</li>
                 </div>
                 <div className = "timeRendered">
-                    <li key={k}>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(13, 20)}</li>
+                    <li>{(moment.utc(el.date).local().format('MMM. D, YYYY  hh:mm A')).substr(13, 20)}</li>
                 </div>
                 <div className = "delete">
-                    <li key={l} className = "delete" value={el._id} onClick={()=> this.alertBox(el._id)}><u>delete</u>&emsp;</li><br />
+                    <li className = "delete" value={el._id} onClick={()=> this.alertBox(el._id)}><u>delete</u>&emsp;</li><br />
                 </div>
             </div>
         ))
     }
 
-    //Should this be replaced with a differnet type of function?
     averageReading() {
         let total = 0;
         for (var i = 0; i < this.state.readings.length; i++) {
@@ -162,7 +154,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
         if (isNaN(Math.round(total / this.state.readings.length))) {
             return ""
         } else {
-            return Math.round(total / this.state.readings.length);
+            return Math.round(total / this.state.readings.length)
         }
     }
 
@@ -172,7 +164,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
     onLogoutClick = e => {
         e.preventDefault();
-        this.props.logoutUser();
+        this.props.logoutUser()
     }
 
     listStyle(item) {
@@ -194,11 +186,13 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
     render() {
         return (
             <div>
-                <div className = "back">
-                    <a href="/loggedin">---Back to submit reading.</a>
-                </div>
-                <div className = "logout">
-                    <a href="/login" onClick={this.onLogoutClick}>Log out</a>
+                <div className = "nav">
+                    <div className = "back">
+                        <a href="/loggedin">Back to submit reading</a>
+                    </div>
+                    <div className = "logout">
+                        <a href="/login" onClick={this.onLogoutClick}>Log out</a>
+                    </div>
                 </div>
                 <div className = "info">
                     <h1>Welcome {this.state.firstname.charAt(0).toUpperCase() + this.state.firstname.substring(1)}</h1>
@@ -224,11 +218,11 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 FullHistory.propTypes = {
     logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
-  };
+  }
   const mapStateToProps = state => ({
     auth: state.auth
-  });
+  })
   export default connect(
     mapStateToProps,
     { logoutUser }
-  )(FullHistory);
+  )(FullHistory)
