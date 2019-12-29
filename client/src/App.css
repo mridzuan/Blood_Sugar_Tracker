@@ -139,7 +139,7 @@ a {
 .list {
   display:flex; 
   flex-direction:row;
-  justify-content:space-between;
+  justify-content:space-around;
   text-align: center;
   background: white;
   color: black;
@@ -149,14 +149,6 @@ a {
   -webkit-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
   box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
   -moz-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
-}
-
-@supports (-ms-accelerator: true) {
-  /* Edge only */
-
-  .list {
-    justify-content: space-around;
-  }
 }
 
 .listCreate {
