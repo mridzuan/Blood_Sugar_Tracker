@@ -188,7 +188,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
             <div>
                 <div className = "nav">
                     <div className = "back">
-                        <a href="/loggedin">Back to submit reading</a>
+                        <a href="/loggedin">Back to submit</a>
                     </div>
                     <div className = "logout">
                         <a href="/login" onClick={this.onLogoutClick}>Log out</a>

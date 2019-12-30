@@ -202,8 +202,13 @@ import moment from "moment"
     render() {
         return (
             <div className = "main">
-                <div className = "logout">
-                    <a href="/login" onClick={this.onLogoutClick}>Log out</a>
+                <div className = "nav">
+                    <div className = "back" style={{visibility: 'hidden'}}>
+                        <a href="/loggedin">Back to submit reading</a>
+                    </div>
+                    <div className = "logout">
+                        <a href="/login" onClick={this.onLogoutClick}>Log out</a>
+                    </div>
                 </div>
                 <div className = "info">
                     <h1>Welcome {this.state.firstname.charAt(0).toUpperCase() + this.state.firstname.substring(1)}</h1>
