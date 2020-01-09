@@ -124,6 +124,35 @@ class Chart extends Component {
           },
         },
       }
+
+      const colorSwitcher = {
+          fill: (data) => {
+              console.log(data.data)
+              let color
+              if (data.level > 140) {
+                  color = "red"
+              } else if ( data.y < 70) {
+                  color = "blue"
+              } else {
+                  color = "green"
+              }
+
+              return color
+          }
+        /*fill: (data) => {
+          let color = 'green';
+    
+          if (data.y > 140) {
+            color = 'red';
+          }
+    
+          if (data.y < 70) {
+            color = 'blue';
+          }
+    
+          return color;
+        },*/
+      };
         return (
             <div>
                 <div className = "nav">
@@ -171,9 +200,7 @@ class Chart extends Component {
                         domainPadding={{ x: 45 }}
                     >
                         <VictoryBar 
-                            style={{
-                                data: {fill: 'black',}
-                            }}
+                            style={{data: { ...colorSwitcher }}}
                             labelComponent={<VictoryTooltip/>}
                             data={this.state.readings}
                             x="date"
