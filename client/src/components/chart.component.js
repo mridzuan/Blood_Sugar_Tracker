@@ -130,7 +130,7 @@ class Chart extends Component {
           fill: (data) => {
               let color
               if (data.datum._y > 140) {
-                  color = "red"
+                  color = "darkred"
               } else if (data.datum._y < 70) {
                   color = "blue"
               } else {
@@ -162,7 +162,7 @@ class Chart extends Component {
                                 data: { stroke: "black", strokeWidth: .5}  
                                 }}
                         data={[
-                        { name: "High (above 140)", symbol: { fill: "red"} },
+                        { name: "High (above 140)", symbol: { fill: "darkred"} },
                         { name: "Normal (70-140)", symbol: { fill: "green" } },
                         { name: "Low (below 70)", symbol: { fill: "blue" } }
                         ]}
@@ -176,7 +176,7 @@ class Chart extends Component {
                                 }}
                         height={300} 
                         width={1500}
-                        colorScale={["blue", "green", "red"]}
+                        colorScale={["blue", "green", "darkred"]}
                         data={[
                             { x: "Low " + lowPercent + "%", y: lowPercent, labels: "Low" },
                             { x: "Normal " + normalPercent + "%", y: normalPercent },
@@ -204,7 +204,7 @@ class Chart extends Component {
                         {/*Create lines to show low, normal, and high comparisons*/}
                         <VictoryLine 
                             style={{
-                                data: {stroke: 'red'}, 
+                                data: {stroke: 'darkred'}, 
                             }}
                             data={[
                                 { x: 0, y: 141 },
