@@ -10,6 +10,7 @@ import CreateUser from "./components/create-user.component"
 import FullHistory from "./components/full-history.component"
 import ForgotPassword from "./components/forgot-password.component"
 import ResetPassword from "./components/reset-password.component"
+import Chart from "./components/chart.component"
 
 import PrivateRoute from "./components/private-route/PrivateRoute"
 import jwt_decode from "jwt-decode";
@@ -45,9 +46,10 @@ function App() {
         <Route path = "/forgotpassword" component={ForgotPassword} />
         <Route path = "/resetpassword" component={ResetPassword} />
         <Switch>
-              <PrivateRoute exact path="/loggedin" component={LoggedIn} />
-              <PrivateRoute path = "/fullhistory" component={FullHistory} />
-            </Switch>
+            <PrivateRoute exact path="/loggedin" component={LoggedIn} />
+            <PrivateRoute path = "/fullhistory" component={FullHistory} />
+            <PrivateRoute path = "/chart" component={Chart} />
+        </Switch>
       </Router>
     </Provider>
   );

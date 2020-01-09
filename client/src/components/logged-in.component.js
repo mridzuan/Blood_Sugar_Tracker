@@ -231,7 +231,8 @@ import moment from "moment"
                 </div>
                 <div className = "outer_container_list"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                     <p style = {this.recentStyle(this.state.listMessage)}>Your average blood sugar level is: <span style = {this.categoryStyle(this.averageReading())}>{this.averageReading()}</span></p>
-                    <p>See your <a href="/fullhistory">full history</a>.</p><br />
+                    <p>View your <a href="/chart">charts</a>.</p>
+                    <p>View your <a href="/fullhistory">full history</a>.</p><br />
                     <div className = "inner_container">
                             <p>New Reading</p>
                             <form onSubmit={this.onSubmit}>

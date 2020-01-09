@@ -217,6 +217,11 @@ a {
   width: 100%;
 }
 
+.legend {
+  height: 50px;
+  color: white;
+}
+
 @media screen and (max-width: 1320px) {
   .listCreate {
     width: 30%;
