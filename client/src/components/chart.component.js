@@ -90,7 +90,7 @@ class Chart extends Component {
     render() {
        //Format Date for VictoryBar
        this.state.readings.map(el => {
-          return el.date = (moment.utc(el.date).local().format("MM-DD hh:mm A"))
+          return el.date = (moment.utc(el.date).local().format("MM-DD HH:MM"))
        })
        //Create percentages for low, normal and high for VictoryPie.
        let normalPercent = 0
@@ -116,7 +116,7 @@ class Chart extends Component {
           style: {
             tickLabels: {
               fill: 'white',
-              fontSize: 12
+              fontSize: 15
             },
             grid: { 
                 stroke: "none" 
@@ -125,13 +125,13 @@ class Chart extends Component {
         },
       }
 
+      //Bar chart colors
       const colorSwitcher = {
           fill: (data) => {
-              console.log(data.data)
               let color
-              if (data.level > 140) {
+              if (data.datum._y > 140) {
                   color = "red"
-              } else if ( data.y < 70) {
+              } else if (data.datum._y < 70) {
                   color = "blue"
               } else {
                   color = "green"
@@ -139,20 +139,7 @@ class Chart extends Component {
 
               return color
           }
-        /*fill: (data) => {
-          let color = 'green';
-    
-          if (data.y > 140) {
-            color = 'red';
-          }
-    
-          if (data.y < 70) {
-            color = 'blue';
-          }
-    
-          return color;
-        },*/
-      };
+      }
         return (
             <div>
                 <div className = "nav">
@@ -171,9 +158,11 @@ class Chart extends Component {
                 <div className = "legend">
                     <VictoryLegend
                         orientation="vertical"
-                        style={{ labels: {fontSize: 4, fill: 'white' } }}
+                        style={{ labels: {fontSize: 5, fill: 'white' },
+                                data: { stroke: "black", strokeWidth: .5}  
+                                }}
                         data={[
-                        { name: "High (above 140)", symbol: { fill: "darkred"} },
+                        { name: "High (above 140)", symbol: { fill: "red"} },
                         { name: "Normal (70-140)", symbol: { fill: "green" } },
                         { name: "Low (below 70)", symbol: { fill: "blue" } }
                         ]}
@@ -181,10 +170,13 @@ class Chart extends Component {
                 </div>
                 <div className = "victoryPie">
                     <VictoryPie
-                        style={{ labels: { fill: 'white' } }}
+                        style={{ 
+                                labels: { fill: 'white' },
+                                data: { stroke: "black", strokeWidth: 2} 
+                                }}
                         height={300} 
                         width={1500}
-                        colorScale={["blue", "green", "darkred"]}
+                        colorScale={["blue", "green", "red"]}
                         data={[
                             { x: "Low " + lowPercent + "%", y: lowPercent, labels: "Low" },
                             { x: "Normal " + normalPercent + "%", y: normalPercent },
@@ -200,7 +192,7 @@ class Chart extends Component {
                         domainPadding={{ x: 45 }}
                     >
                         <VictoryBar 
-                            style={{data: { ...colorSwitcher }}}
+                            style={{data: { ...colorSwitcher, stroke: "black", strokeWidth: 2  } }}
                             labelComponent={<VictoryTooltip/>}
                             data={this.state.readings}
                             x="date"
@@ -212,7 +204,7 @@ class Chart extends Component {
                         {/*Create lines to show low, normal, and high comparisons*/}
                         <VictoryLine 
                             style={{
-                                data: {stroke: 'darkred'}
+                                data: {stroke: 'red'}, 
                             }}
                             data={[
                                 { x: 0, y: 141 },
