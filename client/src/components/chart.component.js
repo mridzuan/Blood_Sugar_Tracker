@@ -192,7 +192,9 @@ class Chart extends Component {
                         domainPadding={{ x: 45 }}
                     >
                         <VictoryBar 
-                            style={{data: { ...colorSwitcher, stroke: "black", strokeWidth: 2  } }}
+                            style={{
+                                data: { ...colorSwitcher }
+                                }}
                             labelComponent={<VictoryTooltip/>}
                             data={this.state.readings}
                             x="date"
@@ -208,7 +210,7 @@ class Chart extends Component {
                             }}
                             data={[
                                 { x: 0, y: 141 },
-                                { x: 15, y: 141 },
+                                { x: this.state.readings.length, y: 141 },
                             ]}
                         />
                         <VictoryLine 
@@ -217,7 +219,7 @@ class Chart extends Component {
                             }}
                             data={[
                                 { x: 0, y: 70 },
-                                { x: 15, y: 70 },
+                                { x: this.state.readings.length, y: 70 },
                             ]}
                         />
                         <VictoryLine 
@@ -226,7 +228,7 @@ class Chart extends Component {
                             }}
                             data={[
                                 { x: 0, y: 1 },
-                                { x: 15, y: 1 },
+                                { x: this.state.readings.length, y: 1 },
                             ]}
                         />
                    </VictoryChart>
